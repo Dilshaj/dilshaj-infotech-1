@@ -1,60 +1,92 @@
-import React from 'react'
-
+import Link from 'next/link';
+import Image from 'next/image';
+import AboutGridSection from '../components/about/AboutGridSection';
 
 const AboutPage = () => {
   return (
-    <div className="min-h-screen bg-white relative overflow-hidden font-sans">
-      
+    <div className="bg-white font-sans text-black">
+      {/* Main Hero Section Wrapper */}
+      <div className="min-h-screen relative overflow-hidden">
 
-      {/* Decorative Background Blobs */}
-      <div className="absolute top-0 right-0 w-[800px] h-[800px] bg-purple-100/50 rounded-full blur-[120px] -translate-y-1/2 translate-x-1/3 z-0 pointer-events-none" />
-      <div className="absolute bottom-0 right-0 w-[600px] h-[600px] bg-blue-100/50 rounded-full blur-[100px] translate-y-1/3 translate-x-1/4 z-0 pointer-events-none" />
-      <div className="absolute top-1/3 right-10 w-[300px] h-[300px] bg-pink-200/40 rounded-full blur-[80px] z-0 pointer-events-none" />
-
-      {/* Hero Content */}
-      <main className="relative z-10 flex flex-col items-center justify-center min-h-screen px-4 text-center max-w-7xl mx-auto mt-10">
-
-        <h1 className="text-6xl md:text-7xl font-bold tracking-tight text-black max-w-5xl leading-[1.1] mb-8">
-          Empowering Your Business with <br className="hidden md:block" />
-          Digital Literacy & Innovation
-        </h1>
-
-        <p className="text-gray-500 text-lg md:text-xl max-w-3xl leading-relaxed mb-12">
-          Dilshaj Infotech is a future-focused technology company dedicated to bridging the
-          gap between education and employment through digital literacy training,
-          innovative solutions, and cutting-edge products.
-        </p>
-
-        {/* 3D Element Placeholders (Simulated with CSS/SVG) */}
-
-        {/* Left 'Star' Element */}
-        <div className="absolute left-10 top-1/3 -translate-y-1/2 hidden lg:block animate-pulse">
-          <svg width="120" height="120" viewBox="0 0 100 100" className="drop-shadow-2xl">
-            <defs>
-              <linearGradient id="starGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-                <stop offset="0%" stopColor="#d8b4fe" /> {/* purple-300 */}
-                <stop offset="100%" stopColor="#a855f7" /> {/* purple-500 */}
-              </linearGradient>
-            </defs>
-            <path d="M 50 0 C 60 40 100 50 100 50 C 60 60 50 100 50 100 C 40 60 0 50 0 50 C 40 40 50 0 50 0" fill="url(#starGradient)" style={{ filter: 'drop-shadow(0px 10px 20px rgba(168, 85, 247, 0.4))' }} />
-          </svg>
-          {/* Ring around star */}
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[140px] h-[40px] border border-purple-300/50 rounded-[100%] rotate-[-15deg]" />
-        </div>
-
-        {/* Bottom Left 'Cube' Element */}
-        <div className="absolute left-[5%] bottom-[10%] hidden lg:block">
-          <div className="relative w-24 h-24 transform rotate-12 perspective-[1000px]">
-            <div className="absolute inset-0 bg-gradient-to-br from-white to-pink-100 rounded-xl shadow-[0_20px_50px_rgba(0,0,0,0.1)] border border-white/50 backdrop-blur-sm z-10 flex items-center justify-center overflow-hidden">
-              <div className="absolute inset-0 bg-gradient-to-tr from-pink-200/20 to-blue-200/20" />
-              <div className="w-full h-1 bg-white/40 absolute top-2 left-0 rotate-45 transform scale-150" />
-            </div>
-            {/* Decorative background for cube */}
-            <div className="absolute -inset-4 bg-purple-500/10 rounded-full blur-xl -z-10" />
+        {/* Transparent Navbar (Inline) */}
+        <nav className="flex items-center justify-between px-6 py-6 max-w-7xl mx-auto w-full absolute top-0 left-0 right-0 z-50">
+          <div className="flex items-center gap-2">
+            <Image src="/img/drlogo.png" alt="Dilshaj Infotech" width={150} height={50} className="h-10 w-auto object-contain" />
           </div>
+
+          <div className="hidden md:flex items-center gap-1 bg-white/50 backdrop-blur-md px-6 py-2 rounded-full border border-white/60 shadow-sm">
+            {['Home', 'About Us', 'Services', 'Projects', 'Career', 'Contact Us'].map((item) => (
+              <Link
+                key={item}
+                href={item === 'Home' ? '/' : `/${item.toLowerCase().replace(' ', '-')}`}
+                className="px-4 py-1.5 text-sm font-medium text-gray-600 hover:text-blue-600 transition-colors"
+              >
+                {item}
+              </Link>
+            ))}
+          </div>
+
+          <button className="hidden md:block px-6 py-2 rounded-full border border-gray-300 text-sm font-medium text-gray-700 hover:border-blue-500 hover:text-blue-500 transition-all bg-white hover:shadow-md">
+            Let's Talk
+          </button>
+        </nav>
+
+        {/* Decorative Background Image (Blobs) */}
+        <div className="absolute top-0 right-0 w-[50%] h-full pointer-events-none select-none z-0">
+          <Image
+            src="/about/hero/blob-right.png"
+            alt="Background Effect"
+            fill
+            className="object-cover object-right opacity-80"
+            priority
+          />
         </div>
 
-      </main>
+
+        {/* Hero Content */}
+        <main className="relative z-10 flex flex-col items-center justify-center min-h-screen px-4 text-center max-w-7xl mx-auto pt-20">
+
+          <h1 className="text-6xl md:text-7xl font-bold tracking-tight text-black max-w-6xl leading-[1.1] mb-8">
+            Empowering Your Business with <br className="hidden md:block" />
+            Digital Literacy & Innovation
+          </h1>
+
+          <p className="text-gray-500 text-lg md:text-xl max-w-3xl leading-relaxed mb-12">
+            Dilshaj Infotech is a future-focused technology company dedicated to bridging the
+            gap between education and employment through digital literacy training,
+            innovative solutions, and cutting-edge products.
+          </p>
+
+          {/* 3D Element Images */}
+
+          {/* Left 'Star' Element */}
+          <div className="absolute left-[5%] top-[35%] -translate-y-1/2 hidden lg:block animate-pulse pointer-events-none select-none">
+            <Image
+              src="/about/hero/star-icon.png"
+              alt="Star 3D"
+              width={120}
+              height={120}
+              className="drop-shadow-2xl"
+            />
+          </div>
+
+          {/* Bottom Left 'Cube' Element */}
+          <div className="absolute left-[8%] bottom-[15%] hidden lg:block pointer-events-none select-none">
+            <Image
+              src="/about/hero/blob-left.png"
+              alt="Cube 3D"
+              width={100}
+              height={100}
+              className="drop-shadow-2xl rotate-12"
+            />
+          </div>
+
+        </main>
+      </div>
+
+      {/* Detailed Story & Stats Section */}
+      <AboutGridSection />
+
     </div>
   )
 }
