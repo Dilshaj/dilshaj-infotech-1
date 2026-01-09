@@ -1,12 +1,6 @@
-import Link from "next/link";
-import Header from "./components/Header";
-import Footer from "./components/Footer";
-
 export default function Home() {
   return (
     <main className="min-h-screen">
-      <Header />
-
       {/* Hero Section */}
       <section className="h-screen flex flex-col items-center justify-center bg-linear-to-br from-blue-600 to-purple-700 text-white p-8">
         <h1 className="text-6xl font-black mb-6 animate-bounce">
@@ -39,8 +33,6 @@ export default function Home() {
           </div>
         </section>
       ))}
-
-      <Footer />
     </main>
   );
 }

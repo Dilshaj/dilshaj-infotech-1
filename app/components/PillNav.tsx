@@ -249,8 +249,8 @@ const PillNav: React.FC<PillNavProps> = ({
                             const isActive = activeHref === item.href;
 
                             const pillStyle: React.CSSProperties = {
-                                background: 'var(--pill-bg, #fff)',
-                                color: 'var(--pill-text, var(--base, #000))',
+                                background: isActive && item.href !== '/' ? '#0a0a0a' : 'var(--pill-bg, #fff)',
+                                color: isActive && item.href !== '/' ? '#ffffff' : 'var(--pill-text, var(--base, #000))',
                                 paddingLeft: 'var(--pill-pad-x)',
                                 paddingRight: 'var(--pill-pad-x)'
                             };
@@ -346,17 +346,18 @@ const PillNav: React.FC<PillNavProps> = ({
             >
                 <ul className="list-none m-0 p-[3px] flex flex-col gap-[3px]">
                     {items.map(item => {
+                        const isActive = activeHref === item.href;
                         const defaultStyle: React.CSSProperties = {
-                            background: 'var(--pill-bg, #fff)',
-                            color: 'var(--pill-text, #fff)'
+                            background: isActive && item.href !== '/' ? '#0a0a0a' : 'var(--pill-bg, #fff)',
+                            color: isActive && item.href !== '/' ? '#ffffff' : 'var(--pill-text, #000)'
                         };
                         const hoverIn = (e: React.MouseEvent<HTMLAnchorElement>) => {
                             e.currentTarget.style.background = 'var(--base)';
                             e.currentTarget.style.color = 'var(--hover-text, #fff)';
                         };
                         const hoverOut = (e: React.MouseEvent<HTMLAnchorElement>) => {
-                            e.currentTarget.style.background = 'var(--pill-bg, #fff)';
-                            e.currentTarget.style.color = 'var(--pill-text, #fff)';
+                            e.currentTarget.style.background = isActive && item.href !== '/' ? '#0a0a0a' : 'var(--pill-bg, #fff)';
+                            e.currentTarget.style.color = isActive && item.href !== '/' ? '#ffffff' : 'var(--pill-text, #000)';
                         };
 
                         const linkClasses =

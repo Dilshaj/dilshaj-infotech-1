@@ -3,6 +3,7 @@
 import React from 'react';
 import PillNav from './PillNav';
 import Link from 'next/link';
+import Image from 'next/image';
 import { usePathname } from 'next/navigation';
 
 const Header = () => {
@@ -20,10 +21,14 @@ const Header = () => {
         <header className="fixed top-0 left-0 w-full z-50 px-4 md:px-8 py-4 flex md:grid md:grid-cols-3 justify-between items-center bg-transparent backdrop-blur-sm">
             {/* Logo on the left */}
             <div className="flex justify-start">
-                <Link href="/" className="group">
-                    <div className="w-12 h-12 rounded-full bg-black flex items-center justify-center overflow-hidden border border-white/20 transition-transform duration-300 group-hover:rotate-12">
-                        <img src="/logo.png" alt="Dilshaj Infotech Logo" className="w-full h-full object-cover" />
-                    </div>
+                <Link href="/" className="relative w-25 h-full flex items-center justify-center overflow-hidden p-1 border border-[#ffffff3e] rounded-full transition-transform duration-300 bg-white/20 backdrop-blur-md">
+                    <Image
+                        src="/about/stats/chart-visual.png"
+                        alt="Dilshaj Infotech Logo"
+                        width={64}
+                        height={64}
+                        className="object-cover"
+                    />
                 </Link>
             </div>
 
