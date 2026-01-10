@@ -218,11 +218,11 @@ const PillNav: React.FC<PillNavProps> = ({
         ['--pill-bg']: pillColor,
         ['--hover-text']: hoveredPillTextColor,
         ['--pill-text']: resolvedPillTextColor,
-        ['--nav-h']: '48px',
-        ['--logo']: '36px',
-        ['--pill-pad-x']: '22px',
-        ['--pill-gap']: '8px',
-        ['--glass-border']: 'rgba(255, 255, 255, 0.3)'
+        ['--nav-h']: '42px',
+        ['--logo']: '32px',
+        ['--pill-pad-x']: '16px',
+        ['--pill-gap']: '4px',
+        ['--glass-border']: '#9e9e9e46'
     } as React.CSSProperties;
 
     return (
@@ -292,7 +292,7 @@ const PillNav: React.FC<PillNavProps> = ({
                             );
 
                             const basePillClasses =
-                                'relative overflow-hidden inline-flex items-center justify-center h-full no-underline rounded-full box-border font-semibold text-[14px] leading-[0] uppercase tracking-[0.2px] whitespace-nowrap cursor-pointer px-0';
+                                'relative overflow-hidden inline-flex items-center justify-center h-full no-underline rounded-full box-border font-semibold text-[12px] lg:text-[14px] leading-[0] uppercase tracking-[0.2px] whitespace-nowrap cursor-pointer px-0';
 
                             return (
                                 <li key={item.href} role="none" className="flex h-full">
