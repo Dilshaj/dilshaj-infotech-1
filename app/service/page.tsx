@@ -20,7 +20,7 @@ const Service = () => {
 
           {/* Left Side Content */}
           <div className="w-full lg:w-1/2 flex flex-col gap-6 lg:gap-8 pt-10 lg:pt-0 relative z-20">
-            <h1 className="text-5xl md:text-6xl lg:text-7x1 font-bold leading-[1.1] text-black tracking-tight">
+            <h1 className="text-[32px] sm:text-[40px] md:text-[40px] lg:text-[54px] xl:text-[64px] 2xl:text-[94px] font-bold leading-[1.1] text-black tracking-tight">
               Comprehensive <br />
               Digital Solutions
             </h1>
@@ -36,12 +36,12 @@ const Service = () => {
           <div className="w-full lg:w-1/2 relative h-[500px] lg:h-[500px] flex items-end justify-center lg:justify-end">
 
             {/* Star - Positioned absolutely relative to this container to match reference */}
-            <div className="absolute top-[15%] lg-right-[25%] lg:left-0 w-16 h-16 lg:w-20 lg:h-20 animate-pulse z-20">
+            <div className="absolute top-[15%] lg-right-[25%] lg:left-[35%] w-15 h-15 lg:w-45 lg:h-40 animate-pulse z-20">
               <Image
                 src="/services/purple-star.png"
                 alt="Sparkle"
                 fill
-                className="object-contain" // Changed to fill for better responsiveness
+                className="object-contain" 
               />
             </div>
 
@@ -51,7 +51,7 @@ const Service = () => {
                 src="/services/hero-image.png"
                 alt="VR Digital Solutions"
                 fill
-                className="object-contain object-bottom scale-105 lg:scale-110" // Adjusted scale and removed translation for better centering
+                className="object-contain object-bottom scale-105 lg:scale-165 lg:translate-x-40 translate-y-15" 
                 priority
               />
             </div>

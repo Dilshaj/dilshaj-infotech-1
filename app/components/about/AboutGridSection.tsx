@@ -26,7 +26,7 @@ const AboutGridSection = () => {
     };
 
     return (
-        <section className="bg-transparent py-24 px-4 md:px-8 max-w-7xl mx-auto font-sans relative overflow-hidden">
+        <section className="bg-transparent pt-10 pb-24 md:py-24 px-4 md:px-8 max-w-7xl mx-auto font-sans relative overflow-hidden">
 
             {/* Top Story Section */}
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 mb-24 relative z-10">
@@ -114,19 +114,19 @@ const AboutGridSection = () => {
             {/* Mission & Vision Text */}
             {/* Mission & Vision Text */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-y-16 gap-x-12 mb-32 w-full items-center">
-                {/* Top Left: Text */}
-                <div className="flex items-center">
-                    <p className="text-gray-500 text-sm leading-relaxed max-w-sm">
-                        Under our brand DI, we aim to bridge the gap between education and employment, while also creating digital platforms that redefine industries like e-commerce, healthcare, and logistics
-                    </p>
-                </div>
-
-                {/* Top Right: Heading */}
-                <div className="flex justify-start md:justify-end items-center">
+                {/* Top Left: Heading (Swapped) */}
+                <div className="flex flex-col items-start">
                     <h2 className="text-4xl md:text-6xl font-bold text-gray-900 flex items-start gap-1 relative">
                         Our Vision
                         <span className="text-2xl md:text-3xl text-gray-900 absolute -right-6 -top-1">✦</span>
                     </h2>
+                </div>
+
+                {/* Top Right: Text (Swapped) */}
+                <div className="flex items-center justify-start md:justify-end">
+                    <p className="text-gray-500 text-sm leading-relaxed max-w-sm text-left md:text-right">
+                        Under our brand DI, we aim to bridge the gap between education and employment, while also creating digital platforms that redefine industries like e-commerce, healthcare, and logistics
+                    </p>
                 </div>
 
                 {/* Bottom Left: Heading */}
@@ -155,10 +155,10 @@ const AboutGridSection = () => {
                 <div
                     onMouseEnter={handleMouseEnter}
                     onMouseLeave={handleMouseLeave}
-                    className="bento-card bg-[#9D7BFF] rounded-[32px] p-8 md:p-10 relative overflow-hidden h-[360px] flex items-center justify-between shadow-sm group lg:col-span-2 cursor-pointer"
+                    className="bento-card bg-[#9D7BFF] rounded-[32px] p-6 md:p-10 relative overflow-hidden h-[300px] sm:h-[360px] flex items-center justify-between shadow-sm group lg:col-span-2 cursor-pointer"
                 >
                     {/* 3D Checkmark Image - Left */}
-                    <div className="absolute left-[20px] top-1/2 -translate-y-1/2 w-[180px] h-[180px] drop-shadow-2xl z-10 transition-transform duration-500 group-hover:scale-110">
+                    <div className="absolute left-[-10px] md:left-[20px] top-1/2 -translate-y-1/2 w-[110px] md:w-[180px] h-[110px] md:h-[180px] drop-shadow-2xl z-10 transition-transform duration-500 group-hover:scale-110">
                         <Image
                             src="/about/mission/image.png"
                             alt="Commitment Checkmark"
@@ -167,19 +167,19 @@ const AboutGridSection = () => {
                         />
                     </div>
 
-                    <div className="ml-auto w-[45%] flex flex-col items-start justify-center z-20 pl-0">
-                        <h3 className="text-5xl md:text-6xl font-bold text-white mb-1 tracking-tight">100%</h3>
-                        <p className="text-purple-100 text-lg font-medium mb-6">Commitment</p>
+                    <div className="ml-auto w-[55%] md:w-[45%] flex flex-col items-start justify-center z-20 pl-0">
+                        <h3 className="text-3xl sm:text-5xl md:text-6xl font-bold text-white mb-1 tracking-tight">100%</h3>
+                        <p className="text-purple-100 text-sm md:text-lg font-medium mb-3 md:mb-6">Commitment</p>
 
-                        <ul className="space-y-3 text-sm font-medium text-white/90">
+                        <ul className="space-y-2 md:space-y-3 text-xs md:text-sm font-medium text-white/90">
                             <li className="flex items-center gap-2">
-                                <Check size={16} strokeWidth={3} /> Quality
+                                <Check size={14} className="md:w-4 md:h-4" strokeWidth={3} /> Quality
                             </li>
                             <li className="flex items-center gap-2">
-                                <Check size={16} strokeWidth={3} /> Integrity
+                                <Check size={14} className="md:w-4 md:h-4" strokeWidth={3} /> Integrity
                             </li>
                             <li className="flex items-center gap-2">
-                                <Check size={16} strokeWidth={3} /> Responsibility
+                                <Check size={14} className="md:w-4 md:h-4" strokeWidth={3} /> Responsibility
                             </li>
                         </ul>
                     </div>
@@ -189,10 +189,10 @@ const AboutGridSection = () => {
                 <div
                     onMouseEnter={handleMouseEnter}
                     onMouseLeave={handleMouseLeave}
-                    className="bento-card bg-white border border-gray-100 rounded-[32px] p-8 md:p-10 relative overflow-hidden h-[360px] group shadow-sm hover:shadow-md transition-all lg:col-span-3 cursor-pointer"
+                    className="bento-card bg-white border border-gray-100 rounded-[32px] p-6 md:p-10 relative overflow-hidden h-[300px] sm:h-[360px] group shadow-sm hover:shadow-md transition-all lg:col-span-3 cursor-pointer"
                 >
                     {/* Bar Chart Image */}
-                    <div className="absolute bottom-0 left-0 w-full md:w-[80%] h-[90%] transition-transform duration-500 group-hover:scale-105 z-10">
+                    <div className="absolute bottom-0 left-0 w-[70%] md:w-[80%] h-[70%] md:h-[90%] transition-transform duration-500 group-hover:scale-105 z-10">
                         <Image
                             src="/about/mission/zen-stones.png"
                             alt="Growth Bar Chart"
@@ -202,20 +202,20 @@ const AboutGridSection = () => {
                     </div>
 
                     {/* Content */}
-                    <div className="absolute top-8 right-8 flex flex-col items-end h-[calc(100%-4rem)] justify-between z-20">
+                    <div className="absolute top-6 md:top-8 right-6 md:right-8 flex flex-col items-end h-[calc(100%-3rem)] md:h-[calc(100%-4rem)] justify-between z-20">
                         <div className="flex -space-x-3">
-                            <div className="w-10 h-10 rounded-full border-2 border-white bg-gray-200 overflow-hidden relative">
+                            <div className="w-8 h-8 md:w-10 md:h-10 rounded-full border-2 border-white bg-gray-200 overflow-hidden relative">
                                 <Image src="/about/team/avatars-group.png" alt="user" fill className="object-cover" />
                             </div>
-                            <div className="w-10 h-10 rounded-full border-2 border-white bg-gray-300 overflow-hidden relative flex items-center justify-center text-[10px] font-bold text-gray-600">
+                            <div className="w-8 h-8 md:w-10 md:h-10 rounded-full border-2 border-white bg-gray-300 overflow-hidden relative flex items-center justify-center text-[10px] font-bold text-gray-600">
                                 +
                             </div>
                         </div>
 
                         <div className="flex flex-col items-end gap-6">
                             <div className="text-right">
-                                <h3 className="text-6xl font-bold text-gray-900 tracking-tight">80%</h3>
-                                <p className="text-gray-500 text-sm font-medium mt-2 leading-relaxed whitespace-nowrap">
+                                <h3 className="text-4xl sm:text-5xl md:text-6xl font-bold text-gray-900 tracking-tight">80%</h3>
+                                <p className="text-gray-500 text-xs md:text-sm font-medium mt-2 leading-relaxed whitespace-nowrap">
                                     Clients come back for <br /> a new project
                                 </p>
                             </div>
@@ -227,18 +227,18 @@ const AboutGridSection = () => {
                 <div
                     onMouseEnter={handleMouseEnter}
                     onMouseLeave={handleMouseLeave}
-                    className="bento-card bg-white border border-gray-100 rounded-[32px] p-8 md:p-10 relative overflow-hidden h-[360px] flex flex-col justify-between group shadow-sm hover:shadow-md transition-all lg:col-span-3 cursor-pointer"
+                    className="bento-card bg-white border border-gray-100 rounded-[32px] p-6 md:p-10 relative overflow-hidden h-[300px] sm:h-[360px] flex flex-col justify-between group shadow-sm hover:shadow-md transition-all lg:col-span-3 cursor-pointer"
                 >
                     <div className="flex justify-between items-start z-10 text-gray-900 relative">
                         <div>
-                            <h3 className="text-6xl font-bold mb-1">15+</h3>
-                            <p className="text-gray-900 font-bold text-lg">Project Ideas</p>
+                            <h3 className="text-4xl sm:text-5xl md:text-6xl font-bold mb-1">15+</h3>
+                            <p className="text-gray-900 font-bold text-sm md:text-lg">Project Ideas</p>
                         </div>
                     </div>
 
                     {/* Stacked Stones Image */}
                     <div className="absolute inset-0 flex justify-center items-center pointer-events-none">
-                        <div className="w-[85%] h-[85%] relative translate-y-8 translate-x-8">
+                        <div className="w-[65%] md:w-[85%] h-[65%] md:h-[85%] relative translate-y-8 translate-x-8">
                             <Image
                                 src="/about/mission/project-idea.png"
                                 alt="Stacked Stones"
@@ -257,20 +257,20 @@ const AboutGridSection = () => {
                 <div
                     onMouseEnter={handleMouseEnter}
                     onMouseLeave={handleMouseLeave}
-                    className="bento-card bg-white border border-gray-100 rounded-[32px] p-8 md:p-10 relative overflow-hidden h-[360px] flex flex-col justify-between group shadow-sm hover:shadow-md transition-all lg:col-span-2 cursor-pointer"
+                    className="bento-card bg-white border border-gray-100 rounded-[32px] p-6 md:p-10 relative overflow-hidden h-[300px] sm:h-[360px] flex flex-col justify-between group shadow-sm hover:shadow-md transition-all lg:col-span-2 cursor-pointer"
                 >
                     <div className="z-10 relative">
                         <div className="flex items-start gap-2">
-                            <h3 className="text-6xl font-bold text-gray-900 leading-none">1</h3>
-                            <p className="font-bold text-gray-900 text-lg leading-tight pt-2">Clear <br /> Vision</p>
+                            <h3 className="text-4xl sm:text-5xl md:text-6xl font-bold text-gray-900 leading-none">1</h3>
+                            <p className="font-bold text-gray-900 text-sm md:text-lg leading-tight pt-2">Clear <br /> Vision</p>
                         </div>
-                        <p className="text-sm text-gray-500 mt-4 max-w-[180px] leading-relaxed">
+                        <p className="text-xs md:text-sm text-gray-500 mt-4 max-w-[180px] leading-relaxed">
                             Building global technology solutions rooted in local impact.
                         </p>
                     </div>
 
                     {/* Robot Hand Image */}
-                    <div className="absolute right-[-50px] bottom-[-50px] w-[350px] h-[350px] z-0">
+                    <div className="absolute right-[-40px] md:right-[-50px] bottom-[-40px] md:bottom-[-50px] w-[200px] md:w-[350px] h-[200px] md:h-[350px] z-0">
                         <Image
                             src="/about/mission/hand.png"
                             alt="Robot Hand"
