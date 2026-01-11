@@ -3,6 +3,9 @@
 import React, { useEffect, useRef, useState } from 'react'
 import Image from 'next/image'
 import gsap from 'gsap'
+import { ScrollTrigger } from 'gsap/ScrollTrigger'
+
+gsap.registerPlugin(ScrollTrigger);
 
 const HeroSection = () => {
     const heartRef = useRef<HTMLDivElement>(null);
@@ -11,6 +14,8 @@ const HeroSection = () => {
     const containerRef = useRef<HTMLDivElement>(null);
     const marqueeRef = useRef<HTMLDivElement>(null);
     const videoRef = useRef<HTMLVideoElement>(null);
+    const topTextRef = useRef<HTMLDivElement>(null);
+    const bottomTextRef = useRef<HTMLDivElement>(null);
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [isPlaying, setIsPlaying] = useState(false);
 
@@ -28,84 +33,141 @@ const HeroSection = () => {
     };
 
     useEffect(() => {
-        const ctx = gsap.context(() => {
-            // Floating animations
-            const floatingAnimate = (ref: React.RefObject<HTMLDivElement | null>, y: number, duration: number, delay: number) => {
-                if (ref.current) {
-                    gsap.to(ref.current, {
-                        y: y,
-                        rotation: 5,
-                        duration: duration,
+        const startAnimations = () => {
+            const ctx = gsap.context(() => {
+                // Floating animations
+                const floatingAnimate = (ref: React.RefObject<HTMLDivElement | null>, y: number, duration: number, delay: number) => {
+                    if (ref.current) {
+                        gsap.to(ref.current, {
+                            y: y,
+                            rotation: 5,
+                            duration: duration,
+                            repeat: -1,
+                            yoyo: true,
+                            ease: "sine.inOut",
+                            delay: delay
+                        });
+                    }
+                };
+
+                floatingAnimate(heartRef, -15, 3, 0);
+                floatingAnimate(helmetRef, -20, 3.5, 0.5);
+                floatingAnimate(sphereRef, -25, 4, 1);
+
+                // Smooth continuous rotation for the bottom asset
+                if (sphereRef.current) {
+                    gsap.to(sphereRef.current.querySelector('img'), {
+                        rotation: 360,
+                        duration: 8,
                         repeat: -1,
-                        yoyo: true,
-                        ease: "sine.inOut",
-                        delay: delay
+                        ease: "none"
                     });
                 }
-            };
 
-            floatingAnimate(heartRef, -15, 3, 0);
-            floatingAnimate(helmetRef, -20, 3.5, 0.5);
-            floatingAnimate(sphereRef, -25, 4, 1);
+                // Initial reveal animation
+                if (containerRef.current) {
+                    gsap.from(containerRef.current.children, {
+                        y: 60,
+                        opacity: 0,
+                        duration: 1.2,
+                        stagger: 0.15,
+                        ease: "power4.out",
+                        clearProps: "all"
+                    });
+                }
 
-            // Smooth continuous rotation for the bottom asset
-            if (sphereRef.current) {
-                gsap.to(sphereRef.current.querySelector('img'), {
+                // Marquee animation
+                if (marqueeRef.current) {
+                    gsap.to(marqueeRef.current, {
+                        x: "-50%",
+                        duration: 20,
+                        ease: "none",
+                        repeat: -1
+                    });
+                }
+
+                // Smooth rotation for the scroll text
+                gsap.to(".scroll-text-svg", {
                     rotation: 360,
-                    duration: 8,
+                    duration: 12,
                     repeat: -1,
                     ease: "none"
                 });
-            }
 
-            // Initial reveal animation
-            if (containerRef.current) {
-                gsap.from(containerRef.current.children, {
-                    y: 60,
-                    opacity: 0,
-                    duration: 1.2,
-                    stagger: 0.15,
-                    ease: "power4.out",
-                    clearProps: "all"
+                // Very slow rotation for the central object
+                gsap.to(".central-obj", {
+                    rotation: -360,
+                    duration: 30,
+                    repeat: -1,
+                    ease: "none"
                 });
-            }
 
-            // Marquee animation
-            if (marqueeRef.current) {
-                gsap.to(marqueeRef.current, {
-                    x: "-50%",
-                    duration: 20,
-                    ease: "none",
-                    repeat: -1
+                // PARALLAX SCROLL EFFECTS FOR TEXT
+                const mm = gsap.matchMedia();
+
+                mm.add("(min-width: 768px)", () => {
+                    // Desktop: Move together to preserve original gap
+                    if (topTextRef.current && bottomTextRef.current) {
+                        gsap.to([topTextRef.current, bottomTextRef.current], {
+                            scrollTrigger: {
+                                trigger: containerRef.current,
+                                start: "top top",
+                                end: "bottom top",
+                                scrub: 1,
+                                invalidateOnRefresh: true,
+                            },
+                            y: -100,
+                            ease: "none"
+                        });
+                    }
                 });
-            }
 
-            // Smooth rotation for the scroll text
-            gsap.to(".scroll-text-svg", {
-                rotation: 360,
-                duration: 12,
-                repeat: -1,
-                ease: "none"
+                mm.add("(max-width: 767px)", () => {
+                    // Mobile: Gentle drift up
+                    if (topTextRef.current && bottomTextRef.current) {
+                        gsap.to([topTextRef.current, bottomTextRef.current], {
+                            scrollTrigger: {
+                                trigger: containerRef.current,
+                                start: "top center",
+                                end: "bottom top",
+                                scrub: 1,
+                            },
+                            y: -50,
+                            ease: "none"
+                        });
+                    }
+                });
             });
+            return ctx;
+        };
 
-            // Very slow rotation for the central object
-            gsap.to(".central-obj", {
-                rotation: -360,
-                duration: 30,
-                repeat: -1,
-                ease: "none"
-            });
-        });
+        let ctx: gsap.Context;
 
-        return () => ctx.revert();
+        const hasLoaded = sessionStorage.getItem("app-loaded");
+        if (hasLoaded) {
+            ctx = startAnimations();
+        } else {
+            const handleLoadingComplete = () => {
+                ctx = startAnimations();
+            };
+            window.addEventListener("loading-complete", handleLoadingComplete);
+            return () => {
+                window.removeEventListener("loading-complete", handleLoadingComplete);
+                if (ctx) ctx.revert();
+            };
+        }
+
+        return () => {
+            if (ctx) ctx.revert();
+        };
     }, []);
 
     return (
-        <section className="relative min-h-screen flex flex-col items-center justify-center overflow-hidden bg-white font-sans pt-32 pb-10 md:pt-45 md:px-10 md:pb-5">
+        <section className="relative min-h-screen flex flex-col items-center justify-center overflow-hidden bg-white font-sans pt-32 pb-24 md:pt-45 md:px-10 md:pb-32">
             <div ref={containerRef} className="relative z-20 flex flex-col items-center w-full">
 
                 {/* First Line: Design, [shaj in] */}
-                <div className="flex items-center relative">
+                <div ref={topTextRef} className="flex items-center relative">
                     {/* 3D Asset - Behind text */}
                     <div
                         ref={heartRef}
@@ -167,7 +229,7 @@ const HeroSection = () => {
                 </div>
 
                 {/* Second Line: + and some magic */}
-                <div className="flex flex-col md:flex-row items-center gap-2 md:gap-8 relative md:-mt-4">
+                <div ref={bottomTextRef} className="flex flex-col md:flex-row items-center gap-4 md:gap-8 relative mt-2 md:-mt-1">
 
                     <div className="text-black hidden w-[60px] h-[60px] md:w-[100px] md:h-[100px] md:flex items-center justify-center">
                         <svg width="60" height="60" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-[60px] h-[60px] md:w-[100px] md:h-[100px]">
