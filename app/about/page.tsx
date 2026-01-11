@@ -1,53 +1,18 @@
 import Link from 'next/link';
 import Image from 'next/image';
 import AboutGridSection from '../components/about/AboutGridSection';
+import ContactFormSection from '../components/about/ContactFormSection';
 
 const AboutPage = () => {
   return (
-    <div className="bg-white font-sans text-black">
+    <div className="bg-[#FDFBF7] font-sans text-black">
       {/* Main Hero Section Wrapper */}
       <div className="min-h-screen relative overflow-hidden">
-
-        {/* Transparent Navbar (Inline) */}
-        <nav className="flex items-center justify-between px-6 py-6 max-w-7xl mx-auto w-full absolute top-0 left-0 right-0 z-50">
-          <div className="flex items-center gap-2">
-            <Image src="/img/drlogo.png" alt="Dilshaj Infotech" width={150} height={50} className="h-10 w-auto object-contain" />
-          </div>
-
-          <div className="hidden md:flex items-center gap-1 bg-white/50 backdrop-blur-md px-6 py-2 rounded-full border border-white/60 shadow-sm">
-            {['Home', 'About Us', 'Services', 'Projects', 'Career', 'Contact Us'].map((item) => (
-              <Link
-                key={item}
-                href={item === 'Home' ? '/' : `/${item.toLowerCase().replace(' ', '-')}`}
-                className="px-4 py-1.5 text-sm font-medium text-gray-600 hover:text-blue-600 transition-colors"
-              >
-                {item}
-              </Link>
-            ))}
-          </div>
-
-          <button className="hidden md:block px-6 py-2 rounded-full border border-gray-300 text-sm font-medium text-gray-700 hover:border-blue-500 hover:text-blue-500 transition-all bg-white hover:shadow-md">
-            Let's Talk
-          </button>
-        </nav>
-
-        {/* Decorative Background Image (Blobs) */}
-        <div className="absolute top-0 right-0 w-[50%] h-full pointer-events-none select-none z-0">
-          <Image
-            src="/about/hero/blob-right.png"
-            alt="Background Effect"
-            fill
-            className="object-cover object-right opacity-80"
-            priority
-          />
-        </div>
-
-
         {/* Hero Content */}
-        <main className="relative z-10 flex flex-col items-center justify-center min-h-screen px-4 text-center max-w-7xl mx-auto pt-20">
+        <main className="relative z-10 flex flex-col items-center justify-center min-h-screen px-4 text-center max-w-7xl mx-auto pt-24 md:pt-32">
 
-          <h1 className="text-6xl md:text-7xl font-bold tracking-tight text-black max-w-6xl leading-[1.1] mb-8">
-            Empowering Your Business with <br className="hidden md:block" />
+          <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold tracking-tight text-gray-900 max-w-6xl leading-[1.1] mb-8">
+            Empowering Your Business with <span className="hidden md:inline"><br /></span>
             Digital Literacy & Innovation
           </h1>
 
@@ -59,33 +24,47 @@ const AboutPage = () => {
 
           {/* 3D Element Images */}
 
-          {/* Left 'Star' Element */}
-          <div className="absolute left-[5%] top-[35%] -translate-y-1/2 hidden lg:block animate-pulse pointer-events-none select-none">
+          {/* Left 'Star' Element - Adjusted Position */}
+          <div className="absolute left-[2%] md:left-[5%] top-[25%] md:top-[30%] -translate-y-1/2 hidden md:block animate-pulse pointer-events-none select-none z-0">
             <Image
               src="/about/hero/star-icon.png"
               alt="Star 3D"
-              width={120}
-              height={120}
-              className="drop-shadow-2xl"
+              width={100}
+              height={100}
+              className="drop-shadow-2xl w-20 h-20 md:w-32 md:h-32"
             />
           </div>
 
-          {/* Bottom Left 'Cube' Element */}
-          <div className="absolute left-[8%] bottom-[15%] hidden lg:block pointer-events-none select-none">
+          {/* Bottom Left 'Cube/Blob' Element - Adjusted Position */}
+          <div className="absolute left-[5%] md:left-[8%] bottom-[10%] md:bottom-[15%] hidden md:block pointer-events-none select-none z-0">
             <Image
               src="/about/hero/blob-left.png"
               alt="Cube 3D"
               width={100}
               height={100}
-              className="drop-shadow-2xl rotate-12"
+              className="drop-shadow-2xl rotate-12 w-20 h-20 md:w-28 md:h-28"
             />
           </div>
 
         </main>
+
+        {/* Decorative Background Image (Blobs) - Adjusted overlap */}
+        <div className="absolute top-0 right-0 w-[60%] md:w-[50%] h-full pointer-events-none select-none z-0">
+          <Image
+            src="/about/hero/blob-right.png"
+            alt="Background Effect"
+            fill
+            className="object-contain md:object-cover object-right-top opacity-90"
+            priority
+          />
+        </div>
       </div>
 
       {/* Detailed Story & Stats Section */}
       <AboutGridSection />
+
+      {/* Contact Form Section */}
+      <ContactFormSection />
 
     </div>
   )

@@ -1,20 +1,44 @@
-import React from 'react';
+"use client";
+import { useRef, useEffect } from 'react';
+import { gsap } from 'gsap';
+import { Lightbulb, Shield, CheckCircle, Play, ArrowUpRight, Check } from 'lucide-react';
 import Image from 'next/image';
 
 const AboutGridSection = () => {
+    const containerRef = useRef<HTMLDivElement>(null);
+
+    useEffect(() => {
+        const ctx = gsap.context(() => {
+            gsap.fromTo(".bento-card",
+                { opacity: 0, y: 100, filter: "blur(10px)" },
+                { opacity: 1, y: 0, filter: "blur(0px)", duration: 0.8, ease: "power3.out", stagger: 0.1 }
+            );
+        }, containerRef);
+        return () => ctx.revert();
+    }, []);
+
+    const handleMouseEnter = (e: React.MouseEvent<HTMLDivElement>) => {
+        gsap.to(e.currentTarget, { scale: 0.98, duration: 0.3, ease: "power2.out" });
+    };
+
+    const handleMouseLeave = (e: React.MouseEvent<HTMLDivElement>) => {
+        gsap.to(e.currentTarget, { scale: 1, duration: 0.3, ease: "power2.out" });
+    };
+
     return (
-        <section className="bg-white py-20 px-4 md:px-8 max-w-7xl mx-auto font-sans">
+        <section className="bg-transparent py-24 px-4 md:px-8 max-w-7xl mx-auto font-sans relative overflow-hidden">
+
             {/* Top Story Section */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-10 mb-20 items-start">
-                <div>
-                    <h4 className="text-purple-600 font-semibold mb-2 flex items-center gap-2">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 mb-24 relative z-10">
+                <div className="max-w-xl">
+                    <h4 className="text-gray-900 font-bold mb-4 flex items-center gap-2 text-lg">
                         <span className="text-xl">✦</span> Our Story
                     </h4>
-                    <h2 className="text-4xl md:text-5xl font-bold text-gray-900 leading-tight">
+                    <h2 className="text-4xl md:text-5xl font-bold text-gray-900 leading-[1.15] tracking-tight">
                         We deliver the best technology solutions for modern businesses.
                     </h2>
                 </div>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-8 text-gray-500 leading-relaxed text-sm md:text-base">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-8 text-gray-500 leading-relaxed text-[15px] pt-4">
                     <p>
                         At Dilshaj Infotech, we specialize in building high-performance digital products and intelligent platforms. From scalable business solutions to modern web and mobile applications, we transform ideas into reliable, future-ready technology.
                     </p>
@@ -25,197 +49,237 @@ const AboutGridSection = () => {
             </div>
 
             {/* Feature Cards Row */}
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-20">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-32 relative z-10">
                 {[
                     {
                         title: "Innovation-Driven Approach",
                         desc: "We combine modern technologies with creative thinking to deliver smart, efficient, and impactful digital solutions.",
-                        icon: "/about/icons/icon-bulb.png",
+                        Icon: Lightbulb,
                     },
                     {
                         title: "Scalable & Secure Solutions",
                         desc: "Our products are built to scale with your business while maintaining high performance and strong security.",
-                        icon: "/about/icons/icon-shield.png",
+                        Icon: Shield,
                     },
                     {
                         title: "Quality You Can Trust",
                         desc: "We follow industry best practices to ensure reliability, speed, and long-term value in everything we build.",
-                        icon: "/about/icons/icon-check.png",
+                        Icon: CheckCircle,
                     },
                 ].map((item, index) => (
-                    <div key={index} className="bg-white p-8 rounded-2xl border border-gray-100 shadow-sm hover:shadow-md transition-shadow">
-                        <div className="w-12 h-12 bg-purple-100 rounded-full flex items-center justify-center mb-6">
-                            {/* Fallback to simple circle if image fails, but using Image here */}
-                            <Image src={item.icon} alt={item.title} width={24} height={24} className="w-6 h-6 object-contain" />
+                    <div key={index} className="bg-white p-6 rounded-2xl border border-gray-100 shadow-sm hover:shadow-md transition-all flex flex-col xl:flex-row items-start gap-5 group">
+                        <div className="w-14 h-14 rounded-full bg-[#8B5CF6] shrink-0 flex items-center justify-center text-white shadow-lg group-hover:scale-110 transition-transform">
+                            <item.Icon size={24} strokeWidth={1.5} />
                         </div>
-                        <h3 className="text-lg font-bold text-gray-900 mb-3">{item.title}</h3>
-                        <p className="text-gray-500 text-sm leading-relaxed">
-                            {item.desc}
-                        </p>
+                        <div>
+                            <h3 className="text-lg font-bold text-gray-900 mb-2 leading-tight">{item.title}</h3>
+                            <p className="text-gray-500 text-sm leading-relaxed">
+                                {item.desc}
+                            </p>
+                        </div>
                     </div>
                 ))}
             </div>
 
-            {/* Video Section */}
-            <div className="relative w-full h-[400px] md:h-[500px] rounded-3xl overflow-hidden mb-20 group cursor-pointer">
-                <Image
-                    src="/about/team/teamwork.png"
-                    alt="Team Meeting"
-                    fill
-                    className="object-cover transition-transform duration-700 group-hover:scale-105"
-                />
-                <div className="absolute inset-0 bg-black/20 flex items-center justify-center">
-                    <div className="w-20 h-20 bg-white/20 backdrop-blur-md rounded-full flex items-center justify-center border border-white/40 transition-transform group-hover:scale-110">
-                        <div className="w-16 h-16 bg-white rounded-full flex items-center justify-center shadow-lg">
-                            <svg className="w-6 h-6 text-purple-600 ml-1" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z" /></svg>
+            {/* Content with Overlapping Images */}
+            <div className="relative w-full max-w-6xl mx-auto mb-32">
+                {/* Main Large Image (Team Meeting) */}
+                <div className="relative w-full md:w-[65%] h-[300px] md:h-[450px] rounded-3xl overflow-hidden shadow-xl z-0">
+                    <Image
+                        src="/about/team/meeting-room.png"
+                        alt="Team Meeting Office"
+                        fill
+                        className="object-cover"
+                    />
+                </div>
+
+                {/* Overlapping Smaller Image (Hands Writing) */}
+                <div className="hidden md:block absolute right-0 bottom-[-40px] md:top-[80px] w-[50%] h-[250px] md:h-[350px] rounded-3xl overflow-hidden shadow-2xl border-[6px] border-white z-10">
+                    <Image
+                        src="/about/team/hands-writing.png"
+                        alt="Hands Writing Planning"
+                        fill
+                        className="object-cover"
+                    />
+
+                    {/* Play Button Overlay */}
+                    <div className="absolute inset-0 flex items-center justify-center bg-black/10 transition-colors hover:bg-black/20 cursor-pointer group">
+                        <div className="w-16 h-16 bg-[#8B5CF6]/90 backdrop-blur-sm rounded-full flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform">
+                            <Play size={28} className="text-white ml-1 fill-white" />
                         </div>
                     </div>
-                </div>
-                <div className="absolute bottom-6 left-6 bg-white/90 backdrop-blur px-4 py-2 rounded-full text-sm font-semibold text-gray-900 border border-white/50">
-                    Official Company Analysis
                 </div>
             </div>
 
             {/* Mission & Vision Text */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-12 mb-16 items-center">
-                <div>
-                    <p className="text-gray-500 text-sm mb-4 leading-relaxed max-w-md">
+            {/* Mission & Vision Text */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-y-16 gap-x-12 mb-32 w-full items-center">
+                {/* Top Left: Text */}
+                <div className="flex items-center">
+                    <p className="text-gray-500 text-sm leading-relaxed max-w-sm">
                         Under our brand DI, we aim to bridge the gap between education and employment, while also creating digital platforms that redefine industries like e-commerce, healthcare, and logistics
                     </p>
-                    <h2 className="text-5xl md:text-6xl font-bold text-gray-50/50 md:absolute md:left-10 md:-translate-x-12">
-                        {/* Faint Background Text Effect if needed, otherwise plain H2 */}
+                </div>
+
+                {/* Top Right: Heading */}
+                <div className="flex justify-start md:justify-end items-center">
+                    <h2 className="text-4xl md:text-6xl font-bold text-gray-900 flex items-start gap-1 relative">
+                        Our Vision
+                        <span className="text-2xl md:text-3xl text-gray-900 absolute -right-6 -top-1">✦</span>
                     </h2>
-                    <h2 className="text-4xl md:text-5xl font-bold text-gray-900">
+                </div>
+
+                {/* Bottom Left: Heading */}
+                <div className="flex flex-col items-start">
+                    <h2 className="text-4xl md:text-6xl font-bold text-gray-900">
                         Our Mission
                     </h2>
-                    <p className="text-xs text-gray-400 mt-2 max-w-xs">
+                    <p className="text-xs text-gray-500 mt-2 max-w-xs">
                         To deliver excellence through innovation, integrity, and dedication.
                     </p>
                 </div>
-                <div className="flex flex-col items-start md:items-end text-left md:text-right">
-                    <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4 text-right w-full">
-                        Our Vision
-                    </h2>
-                    <p className="text-gray-500 text-sm leading-relaxed max-w-md">
+
+                {/* Bottom Right: Text */}
+                <div className="flex items-center justify-start md:justify-end">
+                    <p className="text-gray-500 text-sm leading-relaxed max-w-sm text-left md:text-right">
                         Our mission is to make DI a nationally recognized innovation hub for training, digital services, and real-world product launches
                     </p>
                 </div>
             </div>
 
 
-            {/* Bento Grid Stats */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            {/* Bento Grid Stats - Animated Grid */}
+            <div ref={containerRef} className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6 relative z-10 text-left">
 
-                {/* Card 1: 100% Commitment */}
-                <div className="bg-[#8B5CF6] rounded-3xl p-8 relative overflow-hidden h-[320px] flex items-center justify-between text-white group">
-                    {/* 3D Checkmark Image */}
-                    <div className="w-1/2 h-full relative z-10">
+                {/* Card 1: 100% Commitment (Purple) */}
+                <div
+                    onMouseEnter={handleMouseEnter}
+                    onMouseLeave={handleMouseLeave}
+                    className="bento-card bg-[#9D7BFF] rounded-[32px] p-8 md:p-10 relative overflow-hidden h-[360px] flex items-center justify-between shadow-sm group lg:col-span-2 cursor-pointer"
+                >
+                    {/* 3D Checkmark Image - Left */}
+                    <div className="absolute left-[20px] top-1/2 -translate-y-1/2 w-[180px] h-[180px] drop-shadow-2xl z-10 transition-transform duration-500 group-hover:scale-110">
                         <Image
-                            src="/about/mission/checkmark-3d.png"
-                            alt="Checkmark"
+                            src="/about/mission/image.png"
+                            alt="Commitment Checkmark"
                             fill
-                            className="object-contain object-center scale-125 group-hover:scale-135 transition-transform duration-500"
+                            className="object-contain"
                         />
                     </div>
 
-                    <div className="w-1/2 flex flex-col items-end justify-center z-10 text-right">
-                        <h3 className="text-6xl font-bold mb-0">100%</h3>
-                        <p className="text-purple-200 text-lg font-medium mb-8">Commitment</p>
+                    <div className="ml-auto w-[45%] flex flex-col items-start justify-center z-20 pl-0">
+                        <h3 className="text-5xl md:text-6xl font-bold text-white mb-1 tracking-tight">100%</h3>
+                        <p className="text-purple-100 text-lg font-medium mb-6">Commitment</p>
 
-                        <ul className="space-y-1 text-sm font-medium text-white/90">
-                            <li className="flex items-center justify-end gap-2">
-                                ✓ Quality
+                        <ul className="space-y-3 text-sm font-medium text-white/90">
+                            <li className="flex items-center gap-2">
+                                <Check size={16} strokeWidth={3} /> Quality
                             </li>
-                            <li className="flex items-center justify-end gap-2">
-                                ✓ Integrity
+                            <li className="flex items-center gap-2">
+                                <Check size={16} strokeWidth={3} /> Integrity
                             </li>
-                            <li className="flex items-center justify-end gap-2">
-                                ✓ Responsibility
+                            <li className="flex items-center gap-2">
+                                <Check size={16} strokeWidth={3} /> Responsibility
                             </li>
                         </ul>
                     </div>
-
-                    {/* Background Gradient/Mesh */}
-                    <div className="absolute inset-0 bg-gradient-to-br from-purple-500 to-indigo-600 mix-blend-overlay opacity-50" />
                 </div>
 
-                {/* Card 2: 80% Clients */}
-                <div className="bg-white border border-gray-100 rounded-3xl p-8 relative overflow-hidden h-[320px] flex items-center group shadow-sm">
-                    <div className="w-1/2 h-full relative">
+                {/* Card 2: 80% Clients (White Chart) */}
+                <div
+                    onMouseEnter={handleMouseEnter}
+                    onMouseLeave={handleMouseLeave}
+                    className="bento-card bg-white border border-gray-100 rounded-[32px] p-8 md:p-10 relative overflow-hidden h-[360px] group shadow-sm hover:shadow-md transition-all lg:col-span-3 cursor-pointer"
+                >
+                    {/* Bar Chart Image */}
+                    <div className="absolute bottom-0 left-0 w-full md:w-[80%] h-[90%] transition-transform duration-500 group-hover:scale-105 z-10">
                         <Image
-                            src="/about/mission/growth-chart.png"
-                            alt="Growth Chart"
+                            src="/about/mission/zen-stones.png"
+                            alt="Growth Bar Chart"
                             fill
-                            className="object-contain object-bottom group-hover:scale-105 transition-transform duration-500"
+                            className="object-contain object-left-bottom"
                         />
                     </div>
-                    <div className="w-1/2 flex flex-col items-end justify-end h-full pb-4">
-                        <div className="flex -space-x-3 mb-4">
-                            {/* Avatar placeholders if no specific images found, or reuse team images? Let's use generic if needed or just blobs */}
+
+                    {/* Content */}
+                    <div className="absolute top-8 right-8 flex flex-col items-end h-[calc(100%-4rem)] justify-between z-20">
+                        <div className="flex -space-x-3">
                             <div className="w-10 h-10 rounded-full border-2 border-white bg-gray-200 overflow-hidden relative">
-                                <Image src="/about-section/meeting-room.jpg" alt="user" fill className="object-cover" />
+                                <Image src="/about/team/avatars-group.png" alt="user" fill className="object-cover" />
                             </div>
-                            <div className="w-10 h-10 rounded-full border-2 border-white bg-gray-300 overflow-hidden relative">
-                                <Image src="/about-section/meeting-room.jpg" alt="user" fill className="object-cover" />
-                            </div>
-                            <div className="w-10 h-10 rounded-full border-2 border-white bg-gray-400 overflow-hidden relative">
-                                <Image src="/about-section/meeting-room.jpg" alt="user" fill className="object-cover" />
+                            <div className="w-10 h-10 rounded-full border-2 border-white bg-gray-300 overflow-hidden relative flex items-center justify-center text-[10px] font-bold text-gray-600">
+                                +
                             </div>
                         </div>
-                        <h3 className="text-6xl font-bold text-gray-900">80%</h3>
-                        <p className="text-gray-500 text-xs text-right mt-1">
-                            Clients come back for <br /> a new project ↗
-                        </p>
+
+                        <div className="flex flex-col items-end gap-6">
+                            <div className="text-right">
+                                <h3 className="text-6xl font-bold text-gray-900 tracking-tight">80%</h3>
+                                <p className="text-gray-500 text-sm font-medium mt-2 leading-relaxed whitespace-nowrap">
+                                    Clients come back for <br /> a new project
+                                </p>
+                            </div>
+                        </div>
                     </div>
                 </div>
 
-                {/* Card 3: 15+ Project Ideas */}
-                <div className="bg-white border border-gray-100 rounded-3xl p-8 relative overflow-hidden h-[320px] flex flex-col justify-between group shadow-sm">
-                    <div className="flex justify-between items-start z-10 text-gray-900">
+                {/* Card 3: 15+ Project Ideas (White Sprial Stones) */}
+                <div
+                    onMouseEnter={handleMouseEnter}
+                    onMouseLeave={handleMouseLeave}
+                    className="bento-card bg-white border border-gray-100 rounded-[32px] p-8 md:p-10 relative overflow-hidden h-[360px] flex flex-col justify-between group shadow-sm hover:shadow-md transition-all lg:col-span-3 cursor-pointer"
+                >
+                    <div className="flex justify-between items-start z-10 text-gray-900 relative">
                         <div>
-                            <h3 className="text-5xl font-bold">15+</h3>
-                            <p className="text-gray-600 font-medium mt-1">Project Ideas</p>
+                            <h3 className="text-6xl font-bold mb-1">15+</h3>
+                            <p className="text-gray-900 font-bold text-lg">Project Ideas</p>
                         </div>
                     </div>
 
+                    {/* Stacked Stones Image */}
                     <div className="absolute inset-0 flex justify-center items-center pointer-events-none">
-                        <div className="w-full h-full relative">
+                        <div className="w-[85%] h-[85%] relative translate-y-8 translate-x-8">
                             <Image
-                                src="/about/mission/zen-stones.png"
-                                alt="Zen Stones"
+                                src="/about/mission/project-idea.png"
+                                alt="Stacked Stones"
                                 fill
-                                className="object-contain scale-110 translate-y-4 group-hover:translate-y-2 transition-transform duration-500"
+                                className="object-contain"
                             />
                         </div>
                     </div>
 
-                    <button className="z-10 bg-white border border-gray-900 text-gray-900 px-6 py-2 rounded-full text-sm font-semibold w-fit hover:bg-gray-900 hover:text-white transition-colors">
+                    <button className="z-10 bg-white border border-gray-900 text-gray-900 px-6 py-3 rounded-full text-sm font-bold w-fit hover:bg-gray-900 hover:text-white transition-colors mt-auto">
                         Start New Project
                     </button>
                 </div>
 
-                {/* Card 4: 1 Clear Vision (Works) */}
-                <div className="bg-white border border-gray-100 rounded-3xl p-8 relative overflow-hidden h-[320px] flex flex-col justify-between group shadow-sm">
-                    <div className="z-10">
-                        <div className="flex items-baseline gap-2">
-                            <h3 className="text-5xl font-bold text-gray-900">1</h3>
-                            <p className="font-bold text-gray-900 leading-tight">Clear <br /> Vision</p>
+                {/* Card 4: 1 Clear Vision (White Hand) */}
+                <div
+                    onMouseEnter={handleMouseEnter}
+                    onMouseLeave={handleMouseLeave}
+                    className="bento-card bg-white border border-gray-100 rounded-[32px] p-8 md:p-10 relative overflow-hidden h-[360px] flex flex-col justify-between group shadow-sm hover:shadow-md transition-all lg:col-span-2 cursor-pointer"
+                >
+                    <div className="z-10 relative">
+                        <div className="flex items-start gap-2">
+                            <h3 className="text-6xl font-bold text-gray-900 leading-none">1</h3>
+                            <p className="font-bold text-gray-900 text-lg leading-tight pt-2">Clear <br /> Vision</p>
                         </div>
-                        <p className="text-xs text-gray-500 mt-4 max-w-[150px]">
+                        <p className="text-sm text-gray-500 mt-4 max-w-[180px] leading-relaxed">
                             Building global technology solutions rooted in local impact.
                         </p>
                     </div>
 
-                    <div className="absolute right-[-20px] bottom-[-20px] w-[280px] h-[280px]">
+                    {/* Robot Hand Image */}
+                    <div className="absolute right-[-50px] bottom-[-50px] w-[350px] h-[350px] z-0">
                         <Image
-                            src="/about/mission/robot-hand.png"
+                            src="/about/mission/hand.png"
                             alt="Robot Hand"
                             fill
                             className="object-contain group-hover:scale-105 transition-transform duration-500"
                         />
                     </div>
 
-                    <button className="z-10 bg-white border border-gray-900 text-gray-900 px-6 py-2 rounded-full text-sm font-semibold w-fit hover:bg-gray-900 hover:text-white transition-colors mt-auto">
+                    <button className="z-10 bg-white border border-gray-900 text-gray-900 px-6 py-3 rounded-full text-sm font-bold w-fit hover:bg-gray-900 hover:text-white transition-colors mt-auto">
                         Works
                     </button>
                 </div>
