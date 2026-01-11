@@ -142,7 +142,7 @@ const AboutGridSection = () => {
                 {/* Bottom Right: Text */}
                 <div className="flex items-center justify-start md:justify-end">
                     <p className="text-gray-500 text-sm leading-relaxed max-w-sm text-left md:text-right">
-                        Our mission is to make DI a nationally recognized innovation hub for training, digital services, and real-world product launches
+                        Our mission is to make DR a nationally recognized innovation hub for training, digital services, and real-world product launches
                     </p>
                 </div>
             </div>
@@ -248,7 +248,7 @@ const AboutGridSection = () => {
                         </div>
                     </div>
 
-                    <button className="z-10 bg-white border border-gray-900 text-gray-900 px-6 py-3 rounded-full text-sm font-bold w-fit hover:bg-gray-900 hover:text-white transition-colors mt-auto">
+                    <button suppressHydrationWarning className="z-10 bg-white border border-gray-900 text-gray-900 px-6 py-3 rounded-full text-sm font-bold w-fit hover:bg-gray-900 hover:text-white transition-colors mt-auto">
                         Start New Project
                     </button>
                 </div>
@@ -279,7 +279,7 @@ const AboutGridSection = () => {
                         />
                     </div>
 
-                    <button className="z-10 bg-white border border-gray-900 text-gray-900 px-6 py-3 rounded-full text-sm font-bold w-fit hover:bg-gray-900 hover:text-white transition-colors mt-auto">
+                    <button suppressHydrationWarning className="z-10 bg-white border border-gray-900 text-gray-900 px-6 py-3 rounded-full text-sm font-bold w-fit hover:bg-gray-900 hover:text-white transition-colors mt-auto">
                         Works
                     </button>
                 </div>
