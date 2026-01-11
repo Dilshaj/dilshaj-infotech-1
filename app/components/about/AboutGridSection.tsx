@@ -26,7 +26,7 @@ const AboutGridSection = () => {
     };
 
     return (
-        <section className="bg-transparent pt-10 pb-24 md:py-24 px-4 md:px-8 max-w-7xl mx-auto font-sans relative overflow-hidden">
+        <section className="bg-transparent pt-1 pb-24 md:py-20 px-4 md:px-8 max-w-7xl mx-auto font-sans relative overflow-hidden">
 
             {/* Top Story Section */}
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 mb-24 relative z-10">

@@ -25,7 +25,7 @@ const AboutPage = () => {
           {/* 3D Element Images */}
 
           {/* Left 'Star' Element - Adjusted Position */}
-          <div className="absolute left-[5%] md:left-[5%] top-[15%] md:top-[30%] -translate-y-1/2 block animate-pulse pointer-events-none select-none z-0">
+          <div className="absolute left-[2%] md:left-[5%] top-[20%] md:top-[30%] -translate-y-1/2 block animate-pulse pointer-events-none select-none z-0">
             <Image
               src="/about/hero/star-icon.png"
               alt="Star 3D"
