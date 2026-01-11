@@ -420,7 +420,7 @@ const StaggeredMenu: React.FC<StaggeredMenuProps> = ({
                 </div>
 
                 <header
-                    className="staggered-menu-header absolute top-4 left-4 right-4 flex items-center justify-between px-6 py-3 bg-white/30 backdrop-blur-xl rounded-full border border-white/20 pointer-events-none z-50 shadow-sm"
+                    className="staggered-menu-header absolute top-4 left-4 right-4 flex items-center justify-between px-6 py-3 rounded-full transition-all duration-300 pointer-events-none z-50"
                     aria-label="Main navigation header"
                 >
                     <div className="sm-logo flex items-center select-none pointer-events-auto" aria-label="Logo">
@@ -541,7 +541,8 @@ const StaggeredMenu: React.FC<StaggeredMenuProps> = ({
 
             <style>{`
 .sm-scope .staggered-menu-wrapper { position: relative; width: 100%; height: 100%; z-index: 40; pointer-events: none; }
-.sm-scope .staggered-menu-header { position: absolute; top: 1rem; left: 1rem; right: 1rem; display: flex; align-items: center; justify-content: space-between; padding: 0.75rem 1.5rem; background: rgba(255, 255, 255, 0.3); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border-radius: 9999px; border: 1px solid rgba(255, 255, 255, 0.2); pointer-events: none; z-index: 50; box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1); }
+.sm-scope .staggered-menu-header { position: absolute; top: 1rem; left: 1rem; right: 1rem; display: flex; align-items: center; justify-content: space-between; padding: 0.75rem 1.5rem; background: rgba(255, 255, 255, 0.3); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border-radius: 9999px; border: 1px solid rgba(255, 255, 255, 0.2); pointer-events: none; z-index: 50; box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1); transition: all 0.3s ease; }
+.sm-scope .staggered-menu-wrapper[data-open] .staggered-menu-header { background: transparent; border-color: transparent; backdrop-filter: blur(0); -webkit-backdrop-filter: blur(0); box-shadow: none; }
 .sm-scope .staggered-menu-header > * { pointer-events: auto; }
 .sm-scope .sm-logo { display: flex; align-items: center; user-select: none; }
 .sm-scope .sm-logo-img { display: block; height: 32px; width: auto; object-fit: contain; }

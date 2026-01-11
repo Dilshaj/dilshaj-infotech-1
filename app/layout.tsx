@@ -20,6 +20,7 @@ export const metadata: Metadata = {
 import SmoothScroll from "./components/SmoothScroll";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
+import Preloader from "./components/Preloader";
 
 export default function RootLayout({
   children,
@@ -32,6 +33,7 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
         suppressHydrationWarning
       >
+        <Preloader />
         <SmoothScroll>
           <Header />
           {children}
