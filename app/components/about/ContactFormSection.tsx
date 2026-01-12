@@ -56,17 +56,17 @@ const ContactFormSection = ({
                         <div className="space-y-8">
                             <div className="flex items-center gap-4">
                                 <Phone size={20} className="text-white" />
-                                <span className="text-sm">+1012 3456 789</span>
+                                <span className="text-sm">+91 8977272783</span>
                             </div>
                             <div className="flex items-center gap-4">
                                 <Mail size={20} className="text-white" />
-                                <span className="text-sm">demo@gmail.com</span>
+                                <span className="text-sm">dilshajinfotech.it@gmail.com</span>
                             </div>
                             <div className="flex items-start gap-4">
                                 <MapPin size={20} className="text-white shrink-0 mt-1" />
                                 <span className="text-sm leading-relaxed">
-                                    132 Dartmouth Street Boston, <br />
-                                    Massachusetts 02156 United States
+                                    Rolugutna, Narsipatnam, <br />
+                                    Visakhapatnam, Andhra Pradesh, India
                                 </span>
                             </div>
                         </div>
