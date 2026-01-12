@@ -123,7 +123,6 @@ const Service = () => {
       {/* CTA & Contact Section Wrapper (Light Background) */}
       <div className="bg-[#FDFBF7]">
         <ServiceCTA />
-        <ContactFormSection />
       </div>
     </main>
   )

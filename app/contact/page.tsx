@@ -81,8 +81,9 @@ const ContactPage = () => {
                 </div>
                 <div className="w-full h-[400px] md:h-[500px] relative filter grayscale hover:grayscale-0 transition-all duration-500">
                     {/* Google Maps Embed Placeholder - using a generic central location or Boston as per text */}
+                    {/* Google Maps Embed */}
                     <iframe
-                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2948.817758334466!2d-71.07725968468165!3d42.34720617918804!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89e37a0cee27263b%3A0x6334639e38510!2s132%20Dartmouth%20St%2C%20Boston%2C%20MA%2002116%2C%20USA!5e0!3m2!1sen!2sin!4v1698765432100!5m2!1sen!2sin"
+                        src="https://maps.google.com/maps?q=Dilshaj+Infotech,+Rolugunta,+Visakhapatnam&t=&z=13&ie=UTF8&iwloc=&output=embed"
                         width="100%"
                         height="100%"
                         style={{ border: 0 }}
@@ -91,10 +92,7 @@ const ContactPage = () => {
                         referrerPolicy="no-referrer-when-downgrade"
                     ></iframe>
 
-                    {/* Map Card Overlay (Optional - Design shows it but it might be just the map) */}
-                    {/* The bottom left of the design shows a small white card on the map with "Location". 
-                 I'll add a simple overlay card.
-             */}
+                    {/* Map Card Overlay */}
                     <div className="absolute bottom-8 left-4 md:left-12 bg-white p-4 rounded-lg shadow-lg max-w-xs text-left">
                         <div className="flex items-start gap-3">
                             <div className="bg-[#9D7BFF] p-2 rounded-full text-white">
@@ -102,7 +100,7 @@ const ContactPage = () => {
                             </div>
                             <div>
                                 <h4 className="font-bold text-gray-900 text-sm">Dilshaj Infotech</h4>
-                                <p className="text-xs text-gray-500 mt-1">132 Dartmouth Street Boston, MA 02156</p>
+                                <p className="text-xs text-gray-500 mt-1">Survey No. 225-2a, Rolugunta, Visakhapatnam, Andhra Pradesh</p>
                             </div>
                         </div>
                     </div>

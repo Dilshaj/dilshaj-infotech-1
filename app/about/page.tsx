@@ -93,10 +93,6 @@ const AboutPage = () => {
 
       {/* Detailed Story & Stats Section */}
       <AboutGridSection />
-
-      {/* Contact Form Section */}
-      <ContactFormSection />
-
     </div>
   )
 }
