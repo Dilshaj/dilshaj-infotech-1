@@ -150,6 +150,24 @@ const Header = () => {
         { label: 'LinkedIn', link: 'https://linkedin.com' }
     ];
 
+    /* 
+    // STASHED CHANGES (Incomplete/Conflicting):
+    return (
+        <header className="fixed top-0 left-0 w-full z-50 px-4 md:px-8 py-4 flex md:grid md:grid-cols-3 justify-between items-center bg-transparent backdrop-blur-sm">
+            {/* Logo on the left * /}
+            <div className="flex justify-start">
+                <Link href="/" className="relative w-25 h-full flex items-center justify-center overflow-hidden p-1 border border-[#ffffff3e] rounded-full transition-transform duration-300 bg-white/20 backdrop-blur-md">
+                    <Image
+                        src="/about/stats/logo.png"
+                        alt="Dilshaj Infotech Logo"
+                        width={64}
+                        height={64}
+                        className="object-cover"
+                    />
+                </Link>
+            </div>
+    */
+
     const desktopNavItems = menuItems.map(item => ({
         label: item.label,
         href: item.link
@@ -163,7 +181,7 @@ const Header = () => {
                 <div className="flex justify-start">
                     <Link href="/" className="relative w-32 h-full flex items-center justify-center overflow-hidden p-1 border border-[#9e9e9e46] rounded-full transition-transform duration-300 bg-white/20 backdrop-blur-md">
                         <Image
-                            src="/about/stats/chart-visual.png"
+                            src="/logo.png"
                             alt="Dilshaj Infotech Logo"
                             width={64}
                             height={65}
@@ -202,7 +220,7 @@ const Header = () => {
                     openMenuButtonColor="#000"
                     changeMenuColorOnOpen={true}
                     colors={['#B19EEF', '#5227FF']}
-                    logoUrl="/about/stats/chart-visual.png"
+                    logoUrl="/logo.png"
                     accentColor="#B19EEF"
                     isFixed={true}
                 />

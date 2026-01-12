@@ -8,7 +8,7 @@
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
+  --font-sans: var(--font-outfit);
   --font-mono: var(--font-geist-mono);
   --animate-spin-slow: spin 8s linear infinite;
 }
@@ -21,7 +21,8 @@
 }
 
 html {
-  scrollbar-gutter: stable; /* Always reserve scrollbar space to prevent layout shift */
+  scrollbar-gutter: stable;
+  /* Always reserve scrollbar space to prevent layout shift */
 }
 
 body {
@@ -53,9 +54,12 @@ html.lenis body {
 }
 
 @keyframes float {
-  0%, 100% {
+
+  0%,
+  100% {
     transform: translateY(0px);
   }
+
   50% {
     transform: translateY(-20px);
   }
