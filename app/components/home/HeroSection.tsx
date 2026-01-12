@@ -143,7 +143,7 @@ const HeroSection = () => {
 
         let ctx: gsap.Context;
 
-        const hasLoaded = sessionStorage.getItem("app-loaded");
+        const hasLoaded = sessionStorage.getItem("preloader-shown");
         if (hasLoaded) {
             ctx = startAnimations();
         } else {
