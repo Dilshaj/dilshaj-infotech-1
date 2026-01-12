@@ -1,10 +1,32 @@
-import React from 'react';
+"use client";
+import React, { useRef, useEffect } from 'react';
+import { gsap } from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import Image from 'next/image';
 
 const ServiceCTA = () => {
+    const containerRef = useRef<HTMLDivElement>(null);
+
+    useEffect(() => {
+        gsap.registerPlugin(ScrollTrigger);
+        const ctx = gsap.context(() => {
+            gsap.from(".cta-container", {
+                scrollTrigger: {
+                    trigger: ".cta-container",
+                    start: "top 85%",
+                },
+                scale: 0.9,
+                opacity: 0,
+                duration: 0.8,
+                ease: "power2.out"
+            });
+        }, containerRef);
+        return () => ctx.revert();
+    }, []);
+
     return (
-        <section className="px-4 md:px-8 max-w-7xl mx-auto font-sans pt-20 pb-10">
-            <div className="relative w-full rounded-[40px] overflow-hidden min-h-[400px] flex items-center justify-center text-center px-6 shadow-2xl">
+        <section ref={containerRef} className="px-4 md:px-8 max-w-7xl mx-auto font-sans pt-20 pb-10">
+            <div className="cta-container relative w-full rounded-[40px] overflow-hidden min-h-[300px] md:min-h-[400px] flex items-center justify-center text-center px-6 shadow-2xl">
                 {/* Background Image */}
                 <div className="absolute inset-0 z-0">
                     <Image

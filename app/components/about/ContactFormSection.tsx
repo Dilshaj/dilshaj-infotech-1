@@ -1,19 +1,51 @@
 "use client";
 
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { Phone, Mail, MapPin, Twitter, Instagram, Globe, Send } from 'lucide-react';
+import { gsap } from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
-const ContactFormSection = () => {
+interface ContactFormSectionProps {
+    title?: string;
+    subtitle?: string;
+    className?: string; // Allow passing styles
+}
+
+const ContactFormSection = ({
+    title = "Contact Us",
+    subtitle = "Any question or remarks? Just write us a message!",
+    className = ""
+}: ContactFormSectionProps) => {
     const [selectedSubject, setSelectedSubject] = useState('General Inquiry');
+    const containerRef = useRef<HTMLDivElement>(null);
+
+    useEffect(() => {
+        gsap.registerPlugin(ScrollTrigger);
+        const ctx = gsap.context(() => {
+            gsap.from(".contact-container", {
+                scrollTrigger: {
+                    trigger: ".contact-container",
+                    start: "top 80%",
+                },
+                y: 50,
+                opacity: 0,
+                duration: 0.8,
+                ease: "power2.out"
+            });
+        }, containerRef);
+        return () => ctx.revert();
+    }, []);
 
     return (
-        <section className="bg-transparent py-20 px-4 md:px-8 max-w-7xl mx-auto font-sans">
-            <div className="text-center mb-12">
-                <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">Contact Us</h2>
-                <p className="text-gray-500 font-medium">Any question or remarks? Just write us a message!</p>
-            </div>
+        <section ref={containerRef} className="bg-transparent py-12 md:py-20 px-4 md:px-8 max-w-7xl mx-auto font-sans">
+            {title && (
+                <div className="text-center mb-12">
+                    <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">{title}</h2>
+                    <p className="text-gray-500 font-medium">{subtitle}</p>
+                </div>
+            )}
 
-            <div className="bg-white rounded-3xl shadow-xl overflow-hidden p-2 flex flex-col md:flex-row min-h-[600px] border border-gray-100">
+            <div className="contact-container bg-white rounded-3xl shadow-xl overflow-hidden p-2 flex flex-col md:flex-row min-h-[600px] border border-gray-100">
 
                 {/* Left Side - Contact Info */}
                 <div className="bg-[#011C2B] text-white p-10 md:p-12 md:w-5/12 rounded-2xl relative overflow-hidden flex flex-col justify-between">

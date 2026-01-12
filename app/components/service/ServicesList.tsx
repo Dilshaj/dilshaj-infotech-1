@@ -1,4 +1,7 @@
-import React from 'react';
+"use client";
+import React, { useRef, useEffect } from 'react';
+import { gsap } from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import Image from 'next/image';
 
 const services = [
@@ -50,10 +53,33 @@ const services = [
 ];
 
 const ServicesList = () => {
+    const containerRef = useRef<HTMLDivElement>(null);
+
+    useEffect(() => {
+        gsap.registerPlugin(ScrollTrigger);
+        const ctx = gsap.context(() => {
+            const items = document.querySelectorAll('.service-item');
+            items.forEach((item) => {
+                gsap.from(item, {
+                    scrollTrigger: {
+                        trigger: item,
+                        start: "top 80%",
+                        toggleActions: "play none none reverse"
+                    },
+                    y: 100,
+                    opacity: 0,
+                    duration: 0.8,
+                    ease: "power3.out"
+                });
+            });
+        }, containerRef);
+        return () => ctx.revert();
+    }, []);
+
     return (
-        <section className="py-24 px-4 md:px-8 max-w-7xl mx-auto font-sans bg-transparent">
+        <section ref={containerRef} className="py-16 md:py-24 px-4 md:px-8 max-w-7xl mx-auto font-sans bg-transparent">
             {/* Header */}
-            <div className="flex flex-col md:flex-row justify-between items-start md:items-end mb-24 gap-6 border-t border-gray-200 pt-12">
+            <div className="flex flex-col md:flex-row justify-between items-start md:items-end mb-16 md:mb-24 gap-6 border-t border-gray-200 pt-12">
                 <div>
                     <h4 className="flex items-center gap-3 text-3xl md:text-4xl font-bold text-gray-900">
                         <span className="text-3xl md:text-4xl">✦</span> Services We Offer
@@ -65,11 +91,11 @@ const ServicesList = () => {
             </div>
 
             {/* List */}
-            <div className="space-y-32">
+            <div className="space-y-16 md:space-y-32">
                 {services.map((service, index) => (
                     <div
                         key={index}
-                        className={`flex flex-col ${index % 2 === 0 ? 'lg:flex-row' : 'lg:flex-row-reverse'} items-center gap-12 lg:gap-24 group`}
+                        className={`service-item flex flex-col ${index % 2 === 0 ? 'lg:flex-row' : 'lg:flex-row-reverse'} items-center gap-12 lg:gap-24 group`}
                     >
                         {/* Text */}
                         <div className="flex-1 space-y-6">

@@ -1,4 +1,7 @@
-import React from 'react';
+"use client";
+import React, { useRef, useEffect } from 'react';
+import { gsap } from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import Image from 'next/image';
 import Link from 'next/link';
 
@@ -36,8 +39,28 @@ const processSteps = [
 ];
 
 const ServiceProcess = () => {
+    const containerRef = useRef<HTMLDivElement>(null);
+
+    useEffect(() => {
+        gsap.registerPlugin(ScrollTrigger);
+        const ctx = gsap.context(() => {
+            gsap.from(".process-card", {
+                scrollTrigger: {
+                    trigger: ".process-grid",
+                    start: "top 80%",
+                },
+                y: 50,
+                opacity: 0,
+                duration: 0.6,
+                stagger: 0.1,
+                ease: "power3.out"
+            });
+        }, containerRef);
+        return () => ctx.revert();
+    }, []);
+
     return (
-        <section className="bg-[#050505] pt-24 pb-32 px-4 md:px-8 font-sans">
+        <section ref={containerRef} className="bg-[#050505] py-16 md:pt-24 md:pb-32 px-4 md:px-8 font-sans">
             <div className="max-w-7xl mx-auto">
 
                 {/* Header */}
@@ -51,9 +74,9 @@ const ServiceProcess = () => {
                 </div>
 
                 {/* Process Grid */}
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-32">
+                <div className="process-grid grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-16 md:mb-32">
                     {processSteps.map((step, index) => (
-                        <div key={index} className="bg-[#111] border border-gray-800 p-8 rounded-2xl hover:border-gray-700 transition-colors group">
+                        <div key={index} className="process-card bg-[#111] border border-gray-800 p-8 rounded-2xl hover:border-gray-700 transition-colors group">
                             <h3 className="text-3xl md:text-4xl font-bold text-blue-500 mb-4 group-hover:scale-105 transition-transform origin-left">
                                 {step.number}
                             </h3>

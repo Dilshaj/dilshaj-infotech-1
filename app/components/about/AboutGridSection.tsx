@@ -1,6 +1,7 @@
 "use client";
 import { useRef, useEffect } from 'react';
 import { gsap } from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { Lightbulb, Shield, CheckCircle, Play, ArrowUpRight, Check } from 'lucide-react';
 import Image from 'next/image';
 
@@ -8,11 +9,45 @@ const AboutGridSection = () => {
     const containerRef = useRef<HTMLDivElement>(null);
 
     useEffect(() => {
+        gsap.registerPlugin(ScrollTrigger);
         const ctx = gsap.context(() => {
+            // Animate Bento Cards
             gsap.fromTo(".bento-card",
                 { opacity: 0, y: 100, filter: "blur(10px)" },
-                { opacity: 1, y: 0, filter: "blur(0px)", duration: 0.8, ease: "power3.out", stagger: 0.1 }
+                {
+                    opacity: 1, y: 0, filter: "blur(0px)", duration: 0.8, ease: "power3.out", stagger: 0.1,
+                    scrollTrigger: {
+                        trigger: ".bento-grid-container",
+                        start: "top 80%",
+                    }
+                }
             );
+
+            // Animate Detail/Story Section
+            gsap.from(".story-content-item", {
+                scrollTrigger: {
+                    trigger: ".story-section",
+                    start: "top 80%",
+                },
+                y: 30,
+                opacity: 0,
+                duration: 0.8,
+                stagger: 0.2,
+                ease: "power2.out"
+            });
+
+            // Animate Mission/Vision Section
+            gsap.from(".mission-content-item", {
+                scrollTrigger: {
+                    trigger: ".mission-section",
+                    start: "top 80%",
+                },
+                y: 30,
+                opacity: 0,
+                duration: 0.8,
+                stagger: 0.2,
+                ease: "power2.out"
+            });
         }, containerRef);
         return () => ctx.revert();
     }, []);
@@ -29,8 +64,8 @@ const AboutGridSection = () => {
         <section className="bg-transparent pt-1 pb-24 md:py-20 px-4 md:px-8 max-w-7xl mx-auto font-sans relative overflow-hidden">
 
             {/* Top Story Section */}
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 mb-24 relative z-10">
-                <div className="max-w-xl">
+            <div className="story-section grid grid-cols-1 lg:grid-cols-2 gap-16 mb-24 relative z-10">
+                <div className="max-w-xl story-content-item">
                     <h4 className="text-gray-900 font-bold mb-4 flex items-center gap-2 text-lg">
                         <span className="text-xl">✦</span> Our Story
                     </h4>
@@ -38,11 +73,12 @@ const AboutGridSection = () => {
                         We deliver the best technology solutions for modern businesses.
                     </h2>
                 </div>
+
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-8 text-gray-500 leading-relaxed text-[15px] pt-4">
-                    <p>
+                    <p className="story-content-item">
                         At Dilshaj Infotech, we specialize in building high-performance digital products and intelligent platforms. From scalable business solutions to modern web and mobile applications, we transform ideas into reliable, future-ready technology.
                     </p>
-                    <p>
+                    <p className="story-content-item">
                         Our experienced team is driven by innovation, quality, and speed. We focus on understanding real business needs and delivering solutions that are secure, scalable, and designed to create lasting impact.
                     </p>
                 </div>
@@ -113,9 +149,9 @@ const AboutGridSection = () => {
 
             {/* Mission & Vision Text */}
             {/* Mission & Vision Text */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-y-16 gap-x-12 mb-32 w-full items-center">
+            <div className="mission-section grid grid-cols-1 md:grid-cols-2 gap-y-16 gap-x-12 mb-32 w-full items-center">
                 {/* Top Left: Heading (Swapped) */}
-                <div className="flex flex-col items-start">
+                <div className="flex flex-col items-start mission-content-item">
                     <h2 className="text-4xl md:text-6xl font-bold text-gray-900 flex items-start gap-1 relative">
                         Our Vision
                         <span className="text-2xl md:text-3xl text-gray-900 absolute -right-6 -top-1">✦</span>
@@ -123,14 +159,14 @@ const AboutGridSection = () => {
                 </div>
 
                 {/* Top Right: Text (Swapped) */}
-                <div className="flex items-center justify-start md:justify-end">
+                <div className="flex items-center justify-start md:justify-end mission-content-item">
                     <p className="text-gray-500 text-sm leading-relaxed max-w-sm text-left md:text-right">
                         Under our brand DI, we aim to bridge the gap between education and employment, while also creating digital platforms that redefine industries like e-commerce, healthcare, and logistics
                     </p>
                 </div>
 
                 {/* Bottom Left: Heading */}
-                <div className="flex flex-col items-start">
+                <div className="flex flex-col items-start mission-content-item">
                     <h2 className="text-4xl md:text-6xl font-bold text-gray-900">
                         Our Mission
                     </h2>
@@ -140,7 +176,7 @@ const AboutGridSection = () => {
                 </div>
 
                 {/* Bottom Right: Text */}
-                <div className="flex items-center justify-start md:justify-end">
+                <div className="flex items-center justify-start md:justify-end mission-content-item">
                     <p className="text-gray-500 text-sm leading-relaxed max-w-sm text-left md:text-right">
                         Our mission is to make DR a nationally recognized innovation hub for training, digital services, and real-world product launches
                     </p>
@@ -149,16 +185,16 @@ const AboutGridSection = () => {
 
 
             {/* Bento Grid Stats - Animated Grid */}
-            <div ref={containerRef} className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6 relative z-10 text-left">
+            <div ref={containerRef} className="bento-grid-container grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6 relative z-10 text-left">
 
                 {/* Card 1: 100% Commitment (Purple) */}
                 <div
                     onMouseEnter={handleMouseEnter}
                     onMouseLeave={handleMouseLeave}
-                    className="bento-card bg-[#9D7BFF] rounded-[32px] p-6 md:p-10 relative overflow-hidden h-[300px] sm:h-[360px] flex items-center justify-between shadow-sm group lg:col-span-2 cursor-pointer"
+                    className="bento-card bg-[#9D7BFF] rounded-[32px] p-6 md:p-10 relative overflow-hidden h-[240px] sm:h-[360px] flex items-center justify-between shadow-sm group lg:col-span-2 cursor-pointer"
                 >
                     {/* 3D Checkmark Image - Left */}
-                    <div className="absolute left-[-10px] md:left-[20px] top-1/2 -translate-y-1/2 w-[110px] md:w-[180px] h-[110px] md:h-[180px] drop-shadow-2xl z-10 transition-transform duration-500 group-hover:scale-110">
+                    <div className="absolute left-[-10px] md:left-[20px] top-1/2 -translate-y-1/2 w-[140px] md:w-[180px] h-[140px] md:h-[180px] drop-shadow-2xl z-10 transition-transform duration-500 group-hover:scale-110">
                         <Image
                             src="/about/mission/image.png"
                             alt="Commitment Checkmark"
@@ -189,12 +225,12 @@ const AboutGridSection = () => {
                 <div
                     onMouseEnter={handleMouseEnter}
                     onMouseLeave={handleMouseLeave}
-                    className="bento-card bg-white border border-gray-100 rounded-[32px] p-6 md:p-10 relative overflow-hidden h-[300px] sm:h-[360px] group shadow-sm hover:shadow-md transition-all lg:col-span-3 cursor-pointer"
+                    className="bento-card bg-white border border-gray-100 rounded-[32px] p-6 md:p-10 relative overflow-hidden h-[240px] sm:h-[360px] group shadow-sm hover:shadow-md transition-all lg:col-span-3 cursor-pointer"
                 >
                     {/* Bar Chart Image */}
-                    <div className="absolute bottom-0 left-0 w-[70%] md:w-[80%] h-[70%] md:h-[90%] transition-transform duration-500 group-hover:scale-105 z-10">
+                    <div className="absolute bottom-0 left-0 w-[60%] md:w-[80%] h-[60%] md:h-[90%] transition-transform duration-500 group-hover:scale-105 z-10">
                         <Image
-                            src="/about/mission/zen-stones.png"
+                            src="/about/mission/project-idea.png"
                             alt="Growth Bar Chart"
                             fill
                             className="object-contain object-left-bottom"
@@ -227,7 +263,7 @@ const AboutGridSection = () => {
                 <div
                     onMouseEnter={handleMouseEnter}
                     onMouseLeave={handleMouseLeave}
-                    className="bento-card bg-white border border-gray-100 rounded-[32px] p-6 md:p-10 relative overflow-hidden h-[300px] sm:h-[360px] flex flex-col justify-between group shadow-sm hover:shadow-md transition-all lg:col-span-3 cursor-pointer"
+                    className="bento-card bg-white border border-gray-100 rounded-[32px] p-6 md:p-10 relative overflow-hidden h-[240px] sm:h-[360px] flex flex-col justify-between group shadow-sm hover:shadow-md transition-all lg:col-span-3 cursor-pointer"
                 >
                     <div className="flex justify-between items-start z-10 text-gray-900 relative">
                         <div>
@@ -237,15 +273,13 @@ const AboutGridSection = () => {
                     </div>
 
                     {/* Stacked Stones Image */}
-                    <div className="absolute inset-0 flex justify-center items-center pointer-events-none">
-                        <div className="w-[65%] md:w-[85%] h-[65%] md:h-[85%] relative translate-y-8 translate-x-8">
-                            <Image
-                                src="/about/mission/project-idea.png"
-                                alt="Stacked Stones"
-                                fill
-                                className="object-contain"
-                            />
-                        </div>
+                    <div className="absolute right-[-20px] bottom-[-20px] w-[55%] md:w-[60%] h-[80%] z-0">
+                        <Image
+                            src="/about/mission/zen-stones.png"
+                            alt="Stacked Stones"
+                            fill
+                            className="object-contain group-hover:scale-105 transition-transform duration-500"
+                        />
                     </div>
 
                     <button suppressHydrationWarning className="z-10 bg-white border border-gray-900 text-gray-900 px-6 py-3 rounded-full text-sm font-bold w-fit hover:bg-gray-900 hover:text-white transition-colors mt-auto">
@@ -257,7 +291,7 @@ const AboutGridSection = () => {
                 <div
                     onMouseEnter={handleMouseEnter}
                     onMouseLeave={handleMouseLeave}
-                    className="bento-card bg-white border border-gray-100 rounded-[32px] p-6 md:p-10 relative overflow-hidden h-[300px] sm:h-[360px] flex flex-col justify-between group shadow-sm hover:shadow-md transition-all lg:col-span-2 cursor-pointer"
+                    className="bento-card bg-white border border-gray-100 rounded-[32px] p-6 md:p-10 relative overflow-hidden h-[240px] sm:h-[360px] flex flex-col justify-between group shadow-sm hover:shadow-md transition-all lg:col-span-2 cursor-pointer"
                 >
                     <div className="z-10 relative">
                         <div className="flex items-start gap-2">
@@ -285,7 +319,7 @@ const AboutGridSection = () => {
                 </div>
 
             </div>
-        </section>
+        </section >
     );
 };
 
