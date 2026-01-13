@@ -71,8 +71,7 @@ const HeroSection = () => {
                         opacity: 0,
                         duration: 1.2,
                         stagger: 0.15,
-                        ease: "power4.out",
-                        clearProps: "all"
+                        ease: "power4.out"
                     });
                 }
 
@@ -116,7 +115,7 @@ const HeroSection = () => {
                                 scrub: 1,
                                 invalidateOnRefresh: true,
                             },
-                            y: -100,
+                            y: -80,
                             ease: "none"
                         });
                     }
@@ -163,7 +162,7 @@ const HeroSection = () => {
     }, []);
 
     return (
-        <section className="relative min-h-screen flex flex-col items-center justify-center overflow-hidden bg-white font-sans pt-32 pb-24 md:pt-45 md:px-10 md:pb-32">
+    <section className="relative min-h-screen flex flex-col items-center justify-center overflow-hidden bg-[#FDFBF7] font-sans pt-32 pb-24 md:pt-45 md:px-10 md:pb-32">
             <div ref={containerRef} className="relative z-20 flex flex-col items-center w-full">
 
                 {/* First Line: Design, [shaj in] */}
@@ -258,7 +257,7 @@ const HeroSection = () => {
                 </div>
 
                 {/* Bottom Section */}
-                <div className="w-full max-w-[1400px] mt-20 md:mt-15 px-6 md:px-12">
+                <div className="w-full max-w-[1400px] mt-24 md:mt-32 px-6 md:px-12">
                     {/* Dashed Line */}
                     <div className="w-full border-t border-dashed border-zinc-300 mb-8 md:mb-12"></div>
 

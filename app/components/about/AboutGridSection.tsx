@@ -5,52 +5,97 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { Lightbulb, Shield, CheckCircle, Play, ArrowUpRight, Check } from 'lucide-react';
 import Image from 'next/image';
 
-const AboutGridSection = () => {
+interface AboutGridSectionProps {
+    isHomePage?: boolean;
+}
+
+const AboutGridSection = ({ isHomePage = false }: AboutGridSectionProps) => {
     const containerRef = useRef<HTMLDivElement>(null);
 
     useEffect(() => {
         gsap.registerPlugin(ScrollTrigger);
         const ctx = gsap.context(() => {
-            // Animate Bento Cards
-            gsap.fromTo(".bento-card",
-                { opacity: 0, y: 100, filter: "blur(10px)" },
+            // Animate Bento Cards - Left side (from bottom-left)
+            gsap.fromTo(".bento-card-left",
+                { opacity: 0, x: -200, y: 200, scale: 0.8, rotation: -5 },
                 {
-                    opacity: 1, y: 0, filter: "blur(0px)", duration: 0.8, ease: "power3.out", stagger: 0.1,
+                    opacity: 1, x: 0, y: 0, scale: 1, rotation: 0,
+                    duration: 1.8,
+                    ease: "power4.inOut",
+                    stagger: 0.2,
                     scrollTrigger: {
                         trigger: ".bento-grid-container",
-                        start: "top 80%",
+                        start: "top 90%",
+                        toggleActions: "play none none reverse",
+                    }
+                }
+            );
+
+            // Animate Bento Cards - Right side (from bottom-right)
+            gsap.fromTo(".bento-card-right",
+                { opacity: 0, x: 200, y: 200, scale: 0.8, rotation: 5 },
+                {
+                    opacity: 1, x: 0, y: 0, scale: 1, rotation: 0,
+                    duration: 1.8,
+                    ease: "power4.inOut",
+                    stagger: 0.2,
+                    scrollTrigger: {
+                        trigger: ".bento-grid-container",
+                        start: "top 90%",
+                        toggleActions: "play none none reverse",
                     }
                 }
             );
 
             // Animate Detail/Story Section
-            gsap.from(".story-content-item", {
-                scrollTrigger: {
-                    trigger: ".story-section",
-                    start: "top 80%",
-                },
-                y: 30,
-                opacity: 0,
-                duration: 0.8,
-                stagger: 0.2,
-                ease: "power2.out"
-            });
+            if (!isHomePage) {
+                gsap.from(".story-content-item", {
+                    scrollTrigger: {
+                        trigger: ".story-section",
+                        start: "top 80%",
+                        toggleActions: "play none none reverse",
+                    },
+                    y: 30,
+                    opacity: 0,
+                    duration: 0.8,
+                    stagger: 0.2,
+                    ease: "power2.out"
+                });
+            }
 
             // Animate Mission/Vision Section
-            gsap.from(".mission-content-item", {
+            // Left items (from bottom-left)
+            gsap.from(".mission-item-left", {
                 scrollTrigger: {
                     trigger: ".mission-section",
                     start: "top 80%",
+                    toggleActions: "play none none reverse",
                 },
-                y: 30,
+                x: -100,
+                y: 100,
                 opacity: 0,
-                duration: 0.8,
-                stagger: 0.2,
-                ease: "power2.out"
+                duration: 1.2,
+                ease: "power3.out",
+                stagger: 0.2
+            });
+
+            // Right items (from bottom-right)
+            gsap.from(".mission-item-right", {
+                scrollTrigger: {
+                    trigger: ".mission-section",
+                    start: "top 80%",
+                    toggleActions: "play none none reverse",
+                },
+                x: 100,
+                y: 100,
+                opacity: 0,
+                duration: 1.2,
+                ease: "power3.out",
+                stagger: 0.2
             });
         }, containerRef);
         return () => ctx.revert();
-    }, []);
+    }, [isHomePage]);
 
     const handleMouseEnter = (e: React.MouseEvent<HTMLDivElement>) => {
         gsap.to(e.currentTarget, { scale: 0.98, duration: 0.3, ease: "power2.out" });
@@ -61,123 +106,128 @@ const AboutGridSection = () => {
     };
 
     return (
-        <section className="bg-transparent pt-1 pb-24 md:py-20 px-4 md:px-8 max-w-7xl mx-auto font-sans relative overflow-hidden">
+        <section ref={containerRef} className="bg-[#FDFBF7] pt-1 pb-24 md:py-20 px-4 md:px-20 lg:px-38 max-w-screen mx-auto font-sans relative overflow-hidden">
 
-            {/* Top Story Section */}
-            <div className="story-section grid grid-cols-1 lg:grid-cols-2 gap-16 mb-24 relative z-10">
-                <div className="max-w-xl story-content-item">
-                    <h4 className="text-gray-900 font-bold mb-4 flex items-center gap-2 text-lg">
-                        <span className="text-xl">✦</span> Our Story
-                    </h4>
-                    <h2 className="text-4xl md:text-5xl font-bold text-gray-900 leading-[1.15] tracking-tight">
-                        We deliver the best technology solutions for modern businesses.
-                    </h2>
-                </div>
-
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-8 text-gray-500 leading-relaxed text-[15px] pt-4">
-                    <p className="story-content-item">
-                        At Dilshaj Infotech, we specialize in building high-performance digital products and intelligent platforms. From scalable business solutions to modern web and mobile applications, we transform ideas into reliable, future-ready technology.
-                    </p>
-                    <p className="story-content-item">
-                        Our experienced team is driven by innovation, quality, and speed. We focus on understanding real business needs and delivering solutions that are secure, scalable, and designed to create lasting impact.
-                    </p>
-                </div>
-            </div>
-
-            {/* Feature Cards Row */}
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-32 relative z-10">
-                {[
-                    {
-                        title: "Innovation-Driven Approach",
-                        desc: "We combine modern technologies with creative thinking to deliver smart, efficient, and impactful digital solutions.",
-                        Icon: Lightbulb,
-                    },
-                    {
-                        title: "Scalable & Secure Solutions",
-                        desc: "Our products are built to scale with your business while maintaining high performance and strong security.",
-                        Icon: Shield,
-                    },
-                    {
-                        title: "Quality You Can Trust",
-                        desc: "We follow industry best practices to ensure reliability, speed, and long-term value in everything we build.",
-                        Icon: CheckCircle,
-                    },
-                ].map((item, index) => (
-                    <div key={index} className="bg-white p-6 rounded-2xl border border-gray-100 shadow-sm hover:shadow-md transition-all flex flex-col xl:flex-row items-start gap-5 group">
-                        <div className="w-14 h-14 rounded-full bg-[#8B5CF6] shrink-0 flex items-center justify-center text-white shadow-lg group-hover:scale-110 transition-transform">
-                            <item.Icon size={24} strokeWidth={1.5} />
+            {!isHomePage && (
+                <>
+                    {/* Top Story Section */}
+                    <div className="story-section grid grid-cols-1 lg:grid-cols-2 gap-16 mb-24 relative z-10">
+                        <div className="max-w-xl story-content-item">
+                            <h4 className="text-gray-900 font-bold mb-4 flex items-center gap-2 text-lg">
+                                <span className="text-xl">✦</span> Our Story
+                            </h4>
+                            <h2 className="text-4xl md:text-5xl font-bold text-gray-900 leading-[1.15] tracking-tight">
+                                We deliver the best technology solutions for modern businesses.
+                            </h2>
                         </div>
-                        <div>
-                            <h3 className="text-lg font-bold text-gray-900 mb-2 leading-tight">{item.title}</h3>
-                            <p className="text-gray-500 text-sm leading-relaxed">
-                                {item.desc}
+
+                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-8 text-gray-500 leading-relaxed text-[15px] pt-4">
+                            <p className="story-content-item">
+                                At Dilshaj Infotech, we specialize in building high-performance digital products and intelligent platforms. From scalable business solutions to modern web and mobile applications, we transform ideas into reliable, future-ready technology.
+                            </p>
+                            <p className="story-content-item">
+                                Our experienced team is driven by innovation, quality, and speed. We focus on understanding real business needs and delivering solutions that are secure, scalable, and designed to create lasting impact.
                             </p>
                         </div>
                     </div>
-                ))}
-            </div>
 
-            {/* Content with Overlapping Images */}
-            <div className="relative w-full max-w-6xl mx-auto mb-32">
-                {/* Main Large Image (Team Meeting) */}
-                <div className="relative w-full md:w-[65%] h-[300px] md:h-[450px] rounded-3xl overflow-hidden shadow-xl z-0">
-                    <Image
-                        src="/about/team/meeting-room.png"
-                        alt="Team Meeting Office"
-                        fill
-                        className="object-cover"
-                    />
-                </div>
+                    {/* Feature Cards Row */}
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-32 relative z-10">
+                        {[
+                            {
+                                title: "Innovation-Driven Approach",
+                                desc: "We combine modern technologies with creative thinking to deliver smart, efficient, and impactful digital solutions.",
+                                Icon: Lightbulb,
+                            },
+                            {
+                                title: "Scalable & Secure Solutions",
+                                desc: "Our products are built to scale with your business while maintaining high performance and strong security.",
+                                Icon: Shield,
+                            },
+                            {
+                                title: "Quality You Can Trust",
+                                desc: "We follow industry best practices to ensure reliability, speed, and long-term value in everything we build.",
+                                Icon: CheckCircle,
+                            },
+                        ].map((item, index) => (
+                            <div key={index} className="bg-white p-6 rounded-2xl border border-gray-100 shadow-sm hover:shadow-md transition-all flex flex-col xl:flex-row items-start gap-5 group">
+                                <div className="w-14 h-14 rounded-full bg-[#8B5CF6] shrink-0 flex items-center justify-center text-white shadow-lg group-hover:scale-110 transition-transform">
+                                    <item.Icon size={24} strokeWidth={1.5} />
+                                </div>
+                                <div>
+                                    <h3 className="text-lg font-bold text-gray-900 mb-2 leading-tight">{item.title}</h3>
+                                    <p className="text-gray-500 text-sm leading-relaxed">
+                                        {item.desc}
+                                    </p>
+                                </div>
+                            </div>
+                        ))}
+                    </div>
 
-                {/* Overlapping Smaller Image (Hands Writing) */}
-                <div className="hidden md:block absolute right-0 bottom-[-40px] md:top-[80px] w-[50%] h-[250px] md:h-[350px] rounded-3xl overflow-hidden shadow-2xl border-[6px] border-white z-10">
-                    <Image
-                        src="/about/team/hands-writing.png"
-                        alt="Hands Writing Planning"
-                        fill
-                        className="object-cover"
-                    />
+                    {/* Content with Overlapping Images */}
+                    <div className="relative w-full max-w-6xl mx-auto mb-32">
+                        {/* Main Large Image (Team Meeting) */}
+                        <div className="relative w-full md:w-[65%] h-[300px] md:h-[450px] rounded-3xl overflow-hidden shadow-xl z-0">
+                            <Image
+                                src="/about/team/meeting-room.png"
+                                alt="Team Meeting Office"
+                                fill
+                                className="object-cover"
+                            />
+                        </div>
 
-                    {/* Play Button Overlay */}
-                    <div className="absolute inset-0 flex items-center justify-center bg-black/10 transition-colors hover:bg-black/20 cursor-pointer group">
-                        <div className="w-16 h-16 bg-[#8B5CF6]/90 backdrop-blur-sm rounded-full flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform">
-                            <Play size={28} className="text-white ml-1 fill-white" />
+                        {/* Overlapping Smaller Image (Hands Writing) */}
+                        <div className="hidden md:block absolute right-0 bottom-[-40px] md:top-[80px] w-[50%] h-[250px] md:h-[350px] rounded-3xl overflow-hidden shadow-2xl border-[6px] border-white z-10">
+                            <Image
+                                src="/about/team/hands-writing.png"
+                                alt="Hands Writing Planning"
+                                fill
+                                className="object-cover"
+                            />
+
+                            {/* Play Button Overlay */}
+                            <div className="absolute inset-0 flex items-center justify-center bg-black/10 transition-colors hover:bg-black/20 cursor-pointer group">
+                                <div className="w-16 h-16 bg-[#8B5CF6]/90 backdrop-blur-sm rounded-full flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform">
+                                    <Play size={28} className="text-white ml-1 fill-white" />
+                                </div>
+                            </div>
                         </div>
                     </div>
-                </div>
-            </div>
+                </>
+            )}
 
             {/* Mission & Vision Text */}
             {/* Mission & Vision Text */}
-            <div className="mission-section grid grid-cols-1 md:grid-cols-2 gap-y-16 gap-x-12 mb-32 w-full items-center">
-                {/* Top Left: Heading (Swapped) */}
-                <div className="flex flex-col items-start mission-content-item">
-                    <h2 className="text-4xl md:text-6xl font-bold text-gray-900 flex items-start gap-1 relative">
-                        Our Vision
-                        <span className="text-2xl md:text-3xl text-gray-900 absolute -right-6 -top-1">✦</span>
-                    </h2>
-                </div>
-
-                {/* Top Right: Text (Swapped) */}
-                <div className="flex items-center justify-start md:justify-end mission-content-item">
-                    <p className="text-gray-500 text-sm leading-relaxed max-w-sm text-left md:text-right">
-                        Under our brand DI, we aim to bridge the gap between education and employment, while also creating digital platforms that redefine industries like e-commerce, healthcare, and logistics
+            <div className="mission-section grid grid-cols-1 md:grid-cols-2 gap-y-24 gap-x-12 mb-32 w-full items-center">
+                {/* Vision Section */}
+                {/* Top Left: Text */}
+                <div className="flex items-center justify-start mission-item-left order-2 md:order-1">
+                    <p className="text-[#6B7280] text-lg md:text-xl leading-relaxed max-w-2xl">
+                        Under our brand DR, we aim to bridge the gap between education and employment, while also creating digital platforms that redefine industries like e-commerce, healthcare, and logistics
                     </p>
                 </div>
 
-                {/* Bottom Left: Heading */}
-                <div className="flex flex-col items-start mission-content-item">
-                    <h2 className="text-4xl md:text-6xl font-bold text-gray-900">
-                        Our Mission
+                {/* Top Right: Heading */}
+                <div className="flex flex-col items-start md:items-end mission-item-right order-1 md:order-2">
+                    <h2 className="text-5xl md:text-8xl font-bold tracking-tighter text-right">
+                        <span className="text-[#1F2937]">Our</span> <span className="text-[#9CA3AF]">Vision</span>
                     </h2>
-                    <p className="text-xs text-gray-500 mt-2 max-w-xs">
+                </div>
+
+                {/* Mission Section */}
+                {/* Bottom Left: Heading */}
+                <div className="flex flex-col items-start mission-item-left order-3">
+                    <h2 className="text-5xl md:text-8xl font-bold tracking-tighter text-[#1F2937]">
+                        <span className="text-[#1F2937]">Our</span> <span className="text-[#9CA3AF]">Mission</span>
+                    </h2>
+                    <p className="text-sm md:text-[15px] font-medium text-[#4B5563] mt-4 tracking-tight">
                         To deliver excellence through innovation, integrity, and dedication.
                     </p>
                 </div>
 
                 {/* Bottom Right: Text */}
-                <div className="flex items-center justify-start md:justify-end mission-content-item">
-                    <p className="text-gray-500 text-sm leading-relaxed max-w-sm text-left md:text-right">
+                <div className="flex items-center justify-end mission-item-right order-4">
+                    <p className="text-[#6B7280] text-lg md:text-xl font-medium leading-[1.6] max-w-xl">
                         Our mission is to make DR a nationally recognized innovation hub for training, digital services, and real-world product launches
                     </p>
                 </div>
@@ -185,13 +235,13 @@ const AboutGridSection = () => {
 
 
             {/* Bento Grid Stats - Animated Grid */}
-            <div ref={containerRef} className="bento-grid-container grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6 relative z-10 text-left">
+            <div className="bento-grid-container grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6 relative z-10 text-left">
 
                 {/* Card 1: 100% Commitment (Purple) */}
                 <div
                     onMouseEnter={handleMouseEnter}
                     onMouseLeave={handleMouseLeave}
-                    className="bento-card bg-[#9D7BFF] rounded-[32px] p-6 md:p-10 relative overflow-hidden h-[240px] sm:h-[360px] flex items-center justify-between shadow-sm group lg:col-span-2 cursor-pointer"
+                    className="bento-card bento-card-left bg-[#9D7BFF] rounded-[32px] p-6 md:p-10 relative overflow-hidden h-[240px] sm:h-[360px] flex items-center justify-between shadow-sm group lg:col-span-2 cursor-pointer"
                 >
                     {/* 3D Checkmark Image - Left */}
                     <div className="absolute left-[-10px] md:left-[20px] top-1/2 -translate-y-1/2 w-[140px] md:w-[180px] h-[140px] md:h-[180px] drop-shadow-2xl z-10 transition-transform duration-500 group-hover:scale-110">
@@ -225,7 +275,7 @@ const AboutGridSection = () => {
                 <div
                     onMouseEnter={handleMouseEnter}
                     onMouseLeave={handleMouseLeave}
-                    className="bento-card bg-white border border-gray-100 rounded-[32px] p-6 md:p-10 relative overflow-hidden h-[240px] sm:h-[360px] group shadow-sm hover:shadow-md transition-all lg:col-span-3 cursor-pointer"
+                    className="bento-card bento-card-right bg-white border border-gray-100 rounded-[32px] p-6 md:p-10 relative overflow-hidden h-[240px] sm:h-[360px] group shadow-sm hover:shadow-md transition-all lg:col-span-3 cursor-pointer"
                 >
                     {/* Bar Chart Image */}
                     <div className="absolute bottom-0 left-0 w-[60%] md:w-[80%] h-[60%] md:h-[90%] transition-transform duration-500 group-hover:scale-105 z-10">
@@ -263,7 +313,7 @@ const AboutGridSection = () => {
                 <div
                     onMouseEnter={handleMouseEnter}
                     onMouseLeave={handleMouseLeave}
-                    className="bento-card bg-white border border-gray-100 rounded-[32px] p-6 md:p-10 relative overflow-hidden h-[240px] sm:h-[360px] flex flex-col justify-between group shadow-sm hover:shadow-md transition-all lg:col-span-3 cursor-pointer"
+                    className="bento-card bento-card-left bg-white border border-gray-100 rounded-[32px] p-6 md:p-10 relative overflow-hidden h-[240px] sm:h-[360px] flex flex-col justify-between group shadow-sm hover:shadow-md transition-all lg:col-span-3 cursor-pointer"
                 >
                     <div className="flex justify-between items-start z-10 text-gray-900 relative">
                         <div>
@@ -291,7 +341,7 @@ const AboutGridSection = () => {
                 <div
                     onMouseEnter={handleMouseEnter}
                     onMouseLeave={handleMouseLeave}
-                    className="bento-card bg-white border border-gray-100 rounded-[32px] p-6 md:p-10 relative overflow-hidden h-[240px] sm:h-[360px] flex flex-col justify-between group shadow-sm hover:shadow-md transition-all lg:col-span-2 cursor-pointer"
+                    className="bento-card bento-card-right bg-white border border-gray-100 rounded-[32px] p-6 md:p-10 relative overflow-hidden h-[240px] sm:h-[360px] flex flex-col justify-between group shadow-sm hover:shadow-md transition-all lg:col-span-2 cursor-pointer"
                 >
                     <div className="z-10 relative">
                         <div className="flex items-start gap-2">

@@ -96,7 +96,7 @@ const MarqueeSection = () => {
 
     return (
         <section
-            className="w-full bg-white py-2 overflow-hidden select-none"
+            className="w-full bg-[#FDFBF7] py-2 overflow-hidden select-none"
         >
             <div
                 ref={marqueeRef}

@@ -20,7 +20,7 @@ const Footer = () => {
                 <div className="max-w-[1400px] mx-auto">
                     {/* Header Section */}
                     <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-12 relative z-10 gap-6">
-                        <h2 className="text-4xl md:text-5xl font-semibold bg-clip-text text-transparent bg-gradient-to-r from-white to-gray-400">
+                        <h2 className="text-4xl md:text-5xl font-semibold bg-clip-text text-transparent bg-linear-to-r from-white to-gray-400">
                             Lets Connect there
                         </h2>
                         <Link href="/contact" className="group flex items-center gap-2 bg-[#9d8bf4] text-white px-8 py-3 rounded-full font-medium hover:bg-[#8875e5] transition-all duration-300 transform hover:scale-105">

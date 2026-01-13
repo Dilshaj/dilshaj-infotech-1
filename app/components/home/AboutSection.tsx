@@ -86,7 +86,7 @@ const AboutSection = () => {
     }, []);
 
     return (
-        <section ref={sectionRef} className="relative min-h-auto lg:min-h-screen flex items-center justify-center overflow-hidden bg-white py-12 md:py-20 px-4 sm:px-8 md:px-12 lg:px-20">
+        <section ref={sectionRef} className="relative min-h-auto lg:min-h-screen flex items-center justify-center overflow-hidden bg-[#FDFBF7] py-12 md:py-20 px-4 sm:px-8 md:px-12 lg:px-20">
             {/* Subtle color gradient effects */}
             <div className="bg-glow-1 absolute top-0 left-0 w-[300px] md:w-[600px] h-[300px] md:h-[600px] bg-purple-300/20 rounded-full blur-[80px] md:blur-[120px]" />
             <div className="bg-glow-2 absolute bottom-0 right-0 w-[250px] md:w-[500px] h-[250px] md:h-[500px] bg-blue-300/15 rounded-full blur-[70px] md:blur-[100px]" />

@@ -77,7 +77,7 @@ const ServicesList = () => {
     }, []);
 
     return (
-        <section ref={containerRef} className="py-16 md:py-24 px-4 md:px-8 max-w-7xl mx-auto font-sans bg-transparent">
+        <section ref={containerRef} className="py-16 md:py-24 px-4 md:px-8 lg:px-48 max-w-screen mx-auto font-sans bg-transparent">
             {/* Header */}
             <div className="flex flex-col md:flex-row justify-between items-start md:items-end mb-16 md:mb-24 gap-6 border-t border-gray-200 pt-12">
                 <div>
