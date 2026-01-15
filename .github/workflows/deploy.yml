@@ -1,0 +1,51 @@
+name: Deploy to Production (Master)
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20.11.1
+
+      - name: Install & Build
+        run: |
+          npm install
+          npm run build
+
+      - name: Deploy to EC2
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.EC2_HOST }}
+          username: ${{ secrets.EC2_USER }}
+          key: ${{ secrets.EC2_KEY }}
+          script: |
+            cd /var/www/nextjs-app
+
+            echo "Pulling latest code..."
+            git pull origin master
+
+            echo "Cleaning old build..."
+            rm -rf .next
+            rm -rf node_modules
+
+            echo "Installing dependencies..."
+            npm install
+
+            echo "Building app..."
+            npm run build
+
+            echo "Restarting app..."
+            pm2 restart nextjs-app || pm2 start npm --name "nextjs-app" -- start
+
+            pm2 save
