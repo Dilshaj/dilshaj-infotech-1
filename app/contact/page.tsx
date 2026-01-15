@@ -71,7 +71,9 @@ const ContactPage = () => {
             </div>
 
             {/* FAQ Section */}
-            <FAQSection />
+            <div className="relative z-30">
+                <FAQSection />
+            </div>
 
             {/* Map Section */}
             <section className="py-20 bg-[#FDFBF7]">

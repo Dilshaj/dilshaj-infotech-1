@@ -48,13 +48,14 @@ export default function Preloader() {
                     onComplete: () => {
                         setIsVisible(false);
                         sessionStorage.setItem("preloader-shown", "true");
-                        window.dispatchEvent(new Event("loading-complete"));
 
                         // Restore scroll position and body styles
                         document.body.style.position = '';
                         document.body.style.top = '';
                         document.body.style.width = '';
                         window.scrollTo(0, scrollY);
+
+                        window.dispatchEvent(new Event("loading-complete"));
                     }
                 });
             }

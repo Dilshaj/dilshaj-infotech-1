@@ -67,7 +67,7 @@ const IndustrySupport = () => {
                     </p>
                     <div className="pt-2 md:pt-4">
                         <Link
-                            href="/work"
+                            href="/service"
                             className="inline-flex items-center justify-center px-7 py-3 md:px-10 md:py-4 border border-gray-300 rounded-full text-gray-900 font-bold text-sm sm:text-base hover:bg-gray-900 hover:text-white hover:border-gray-900 transition-all duration-300 shadow-sm"
                         >
                             All Works

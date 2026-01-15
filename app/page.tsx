@@ -7,6 +7,7 @@ import IndustrySupport from "./components/home/IndustrySupport";
 import HomeServices from "./components/home/HomeServices";
 import HomePath from "./components/home/HomePath";
 import HomeAlumni from "./components/home/HomeAlumni";
+import PartnerWithUs from "./components/home/PartnerWithUs";
 import ProjectCarousel from "./components/projects/ProjectCarousel";
 
 export default function Home() {
@@ -41,6 +42,9 @@ export default function Home() {
 
       {/* Alumni Section */}
       <HomeAlumni />
+
+      {/* Partner With Us Section */}
+      <PartnerWithUs />
 
       {/* Service Section */}
       {/* <ServiceSection /> */}
