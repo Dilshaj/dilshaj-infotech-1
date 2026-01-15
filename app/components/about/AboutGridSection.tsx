@@ -15,38 +15,6 @@ const AboutGridSection = ({ isHomePage = false }: AboutGridSectionProps) => {
     useEffect(() => {
         gsap.registerPlugin(ScrollTrigger);
         const ctx = gsap.context(() => {
-            // Animate Bento Cards - Left side (from bottom-left)
-            gsap.fromTo(".bento-card-left",
-                { opacity: 0, x: -200, y: 200, scale: 0.8, rotation: -5 },
-                {
-                    opacity: 1, x: 0, y: 0, scale: 1, rotation: 0,
-                    duration: 1.8,
-                    ease: "power4.inOut",
-                    stagger: 0.2,
-                    scrollTrigger: {
-                        trigger: ".bento-grid-container",
-                        start: "top 90%",
-                        toggleActions: "play none none reverse",
-                    }
-                }
-            );
-
-            // Animate Bento Cards - Right side (from bottom-right)
-            gsap.fromTo(".bento-card-right",
-                { opacity: 0, x: 200, y: 200, scale: 0.8, rotation: 5 },
-                {
-                    opacity: 1, x: 0, y: 0, scale: 1, rotation: 0,
-                    duration: 1.8,
-                    ease: "power4.inOut",
-                    stagger: 0.2,
-                    scrollTrigger: {
-                        trigger: ".bento-grid-container",
-                        start: "top 90%",
-                        toggleActions: "play none none reverse",
-                    }
-                }
-            );
-
             // Animate Detail/Story Section
             if (!isHomePage) {
                 gsap.from(".story-content-item", {
@@ -196,7 +164,6 @@ const AboutGridSection = ({ isHomePage = false }: AboutGridSectionProps) => {
                 </>
             )}
 
-            {/* Mission & Vision Text */}
             {/* Mission & Vision Text */}
             <div className="mission-section grid grid-cols-1 md:grid-cols-2 gap-y-24 gap-x-12 mb-32 w-full items-center">
                 {/* Vision Section */}

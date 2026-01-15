@@ -69,7 +69,7 @@ export default function CareerPage() {
                 src="/about/hero/star-icon.png"
                 alt="Decorative Star"
                 fill
-                className="object-contain" // Fixed typo if any
+                className="object-contain" 
               />
             </motion.div>
 

@@ -2,12 +2,12 @@ import HeroSection from "./components/home/HeroSection";
 import MarqueeSection from "./components/home/MarqueeSection";
 import AboutSection from "./components/home/AboutSection";
 import WhoWeAre from "./components/home/WhoWeAre";
-import ContactFormSection from "./components/about/ContactFormSection";
 import AboutGridSection from "./components/about/AboutGridSection";
 import IndustrySupport from "./components/home/IndustrySupport";
 import HomeServices from "./components/home/HomeServices";
 import HomePath from "./components/home/HomePath";
 import HomeAlumni from "./components/home/HomeAlumni";
+import ProjectCarousel from "./components/projects/ProjectCarousel";
 
 export default function Home() {
   return (
@@ -32,6 +32,9 @@ export default function Home() {
 
       {/* Home Services Section */}
       <HomeServices />
+
+      {/* Project Carousel Section */}
+      <ProjectCarousel isHomePage={true} />
 
       {/* Choose Your Path Section */}
       <HomePath />

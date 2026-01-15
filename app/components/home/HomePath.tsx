@@ -1,15 +1,28 @@
 "use client";
 
-import React, { useRef, useEffect } from 'react';
+import React, { useRef, useEffect, useState } from 'react';
 import { BookOpen, Briefcase, CheckCircle2, ArrowRight } from 'lucide-react';
 import Link from 'next/link';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import EnrollmentModal from './EnrollmentModal';
 
 const HomePath = () => {
     const sectionRef = useRef<HTMLElement>(null);
     const titleRef = useRef<HTMLDivElement>(null);
     const cardsRef = useRef<HTMLDivElement>(null);
+    const [modalState, setModalState] = useState<{ isOpen: boolean; type: 'internship' | 'value-course' }>({
+        isOpen: false,
+        type: 'internship'
+    });
+
+    const openModal = (type: 'internship' | 'value-course') => {
+        setModalState({ isOpen: true, type });
+    };
+
+    const closeModal = () => {
+        setModalState(prev => ({ ...prev, isOpen: false }));
+    };
 
     useEffect(() => {
         gsap.registerPlugin(ScrollTrigger);
@@ -104,10 +117,13 @@ const HomePath = () => {
                         </ul>
 
                         {/* Button */}
-                        <Link href="/courses" className="relative w-full inline-flex items-center justify-center px-8 py-4 bg-blue-600 text-white rounded-xl font-semibold hover:bg-blue-700 transition-all duration-300 hover:shadow-lg hover:shadow-blue-600/20 group-hover:translate-x-1">
+                        <button
+                            onClick={() => openModal('value-course')}
+                            className="relative w-full inline-flex items-center justify-center px-8 py-4 bg-blue-600 text-white rounded-xl font-semibold hover:bg-blue-700 transition-all duration-300 hover:shadow-lg hover:shadow-blue-600/20 group-hover:translate-x-1 cursor-pointer"
+                        >
                             Enroll in Courses
                             <ArrowRight className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" />
-                        </Link>
+                        </button>
                     </div>
 
                     {/* Internship Card (Dark) */}
@@ -144,14 +160,19 @@ const HomePath = () => {
                         </ul>
 
                         {/* Button */}
-                        <Link href="/internship" className="relative w-full inline-flex items-center justify-center px-8 py-4 bg-indigo-600 text-white rounded-xl font-semibold hover:bg-indigo-700 transition-all duration-300 hover:shadow-lg hover:shadow-indigo-600/20 group-hover:translate-x-1">
+                        <button
+                            onClick={() => openModal('internship')}
+                            className="relative w-full inline-flex items-center justify-center px-8 py-4 bg-indigo-600 text-white rounded-xl font-semibold hover:bg-indigo-700 transition-all duration-300 hover:shadow-lg hover:shadow-indigo-600/20 group-hover:translate-x-1 cursor-pointer"
+                        >
                             Apply for Internship
                             <ArrowRight className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" />
-                        </Link>
+                        </button>
                     </div>
 
                 </div>
             </div>
+
+            <EnrollmentModal isOpen={modalState.isOpen} onClose={closeModal} courseType={modalState.type} />
         </section>
     );
 };

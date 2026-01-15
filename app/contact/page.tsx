@@ -55,10 +55,10 @@ const ContactPage = () => {
                     Get in touch with us. We'd love to hear from you and discuss how we can help transform your business.
                 </p>
 
-                <div className="relative z-10 mb-8">
+                {/* <div className="relative z-10 mb-8">
                     <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-2">Get In Touch</h2>
                     <p className="text-gray-500 text-sm md:text-base">Any questions or remarks? Just write us a message!</p>
-                </div>
+                </div> */}
 
             </section>
 
@@ -74,26 +74,28 @@ const ContactPage = () => {
             <FAQSection />
 
             {/* Map Section */}
-            <section className="py-20 bg-white">
+            <section className="py-20 bg-[#FDFBF7]">
                 <div className="text-center mb-10">
                     <h2 className="text-3xl font-bold text-[#1A0B2E]">Find Us</h2>
                     <p className="text-blue-600 text-sm font-medium mt-1">Visit our office or reach out to us</p>
                 </div>
-                <div className="w-full h-[400px] md:h-[500px] relative filter grayscale hover:grayscale-0 transition-all duration-500">
+                <div className="w-full h-[400px] md:h-[500px] relative group">
                     {/* Google Maps Embed Placeholder - using a generic central location or Boston as per text */}
                     {/* Google Maps Embed */}
-                    <iframe
-                        src="https://maps.google.com/maps?q=Dilshaj+Infotech,+Rolugunta,+Visakhapatnam&t=&z=13&ie=UTF8&iwloc=&output=embed"
-                        width="100%"
-                        height="100%"
-                        style={{ border: 0 }}
-                        allowFullScreen={true}
-                        loading="lazy"
-                        referrerPolicy="no-referrer-when-downgrade"
-                    ></iframe>
+                    <div className="w-full h-full filter grayscale group-hover:grayscale-0 transition-all duration-500">
+                        <iframe
+                            src="https://maps.google.com/maps?q=Dilshaj+Infotech,+Rolugunta,+Visakhapatnam&t=&z=13&ie=UTF8&iwloc=&output=embed"
+                            width="100%"
+                            height="100%"
+                            style={{ border: 0 }}
+                            allowFullScreen={true}
+                            loading="lazy"
+                            referrerPolicy="no-referrer-when-downgrade"
+                        ></iframe>
+                    </div>
 
                     {/* Map Card Overlay */}
-                    <div className="absolute bottom-8 left-4 md:left-12 bg-white p-4 rounded-lg shadow-lg max-w-xs text-left">
+                    <div className="absolute bottom-8 left-4 md:left-12 bg-[#FDFBF7] p-4 rounded-lg shadow-lg max-w-xs text-left z-10">
                         <div className="flex items-start gap-3">
                             <div className="bg-[#9D7BFF] p-2 rounded-full text-white">
                                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>

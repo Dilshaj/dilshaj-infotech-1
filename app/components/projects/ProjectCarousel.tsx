@@ -93,7 +93,7 @@ const projects = [
     }
 ];
 
-export default function ProjectCarousel() {
+export default function ProjectCarousel({ isHomePage = false }: { isHomePage?: boolean }) {
     const [currentIndex, setCurrentIndex] = useState(0);
     const [direction, setDirection] = useState<'next' | 'prev'>('next');
     const [isAnimating, setIsAnimating] = useState(false);
@@ -103,17 +103,29 @@ export default function ProjectCarousel() {
 
     // Section Reveal Animation
     useGSAP(() => {
-        gsap.from(containerRef.current, {
-            y: 50,
-            opacity: 0,
-            duration: 1,
-            ease: "power3.out",
-            scrollTrigger: {
-                trigger: containerRef.current,
-                start: "top 80%",
-                toggleActions: "play reverse play reverse"
-            }
-        });
+        if (isHomePage) {
+            gsap.from(".project-card-container", {
+                scale: 0.9,
+                scrollTrigger: {
+                    trigger: containerRef.current,
+                    start: "top bottom",
+                    end: "center center",
+                    scrub: 1
+                }
+            });
+        } else {
+            gsap.from(containerRef.current, {
+                y: 50,
+                opacity: 0,
+                duration: 1,
+                ease: "power3.out",
+                scrollTrigger: {
+                    trigger: containerRef.current,
+                    start: "top 80%",
+                    toggleActions: "play reverse play reverse"
+                }
+            });
+        }
     }, { scope: containerRef });
 
     const changeSlide = contextSafe((newDirection: 'next' | 'prev') => {
@@ -184,11 +196,16 @@ export default function ProjectCarousel() {
 
     const project = projects[currentIndex];
 
+    // Conditional Styles
+    const containerClasses = isHomePage
+        ? "w-[90%] md:w-[90%] mx-auto rounded-[2.5rem] bg-white border border-gray-100 shadow-lg"
+        : "w-full border-y border-gray-100 bg-white";
+
     return (
         <div ref={containerRef} className="w-full relative pt-24 md:pt-32 pb-0">
 
             {/* Header */}
-            <div className="w-full mb-10 pl-4 md:pl-10 flex items-center gap-3">
+            <div className={`w-full mb-10 pl-4 flex items-center gap-3 ${isHomePage ? "md:pl-24" : "md:pl-15"}`}>
                 <div className="relative w-8 h-8 md:w-12 md:h-12 flex items-center justify-center">
                     <Image
                         src="/about/hero/star-icon.png"
@@ -203,7 +220,7 @@ export default function ProjectCarousel() {
             </div>
 
             {/* Main Card Container */}
-            <div className="w-full h-[700px] md:h-[800px] relative overflow-hidden flex flex-col lg:flex-row border-y border-gray-100 bg-white">
+            <div className={`${containerClasses} project-card-container h-[700px] md:h-[800px] relative overflow-hidden flex flex-col lg:flex-row`}>
 
                 {/* Left Side - Content Area */}
                 <div className="w-full lg:w-[35%] h-full relative p-6 md:p-12 flex flex-col justify-start z-30 pointer-events-none md:pointer-events-auto">
@@ -280,7 +297,7 @@ export default function ProjectCarousel() {
                                     src={project.image}
                                     alt={project.cardTitle}
                                     fill
-                                    className="gsap-image object-contain object-right-bottom drop-shadow-2xl"
+                                    className="gsap-image object-contain object-bottom-right drop-shadow-2xl"
                                     priority
                                 />
                             </div>
