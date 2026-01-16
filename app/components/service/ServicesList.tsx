@@ -72,6 +72,23 @@ const ServicesList = () => {
                     ease: "power3.out"
                 });
             });
+
+            // Parallax Animation for Service Images
+            gsap.utils.toArray<HTMLElement>(".service-parallax-inner").forEach((inner) => {
+                gsap.fromTo(inner,
+                    { yPercent: -15 },
+                    {
+                        yPercent: 15,
+                        ease: "none",
+                        scrollTrigger: {
+                            trigger: inner.parentElement,
+                            start: "top bottom",
+                            end: "bottom top",
+                            scrub: true
+                        }
+                    }
+                );
+            });
         }, containerRef);
         return () => ctx.revert();
     }, []);
@@ -109,12 +126,14 @@ const ServicesList = () => {
 
                         {/* Image */}
                         <div className="flex-1 w-full relative aspect-[4/3] rounded-[32px] overflow-hidden shadow-sm">
-                            <Image
-                                src={service.image}
-                                alt={service.title}
-                                fill
-                                className="object-cover transition-transform duration-700 group-hover:scale-105"
-                            />
+                            <div className="service-parallax-inner relative w-full h-[120%] -top-[10%] left-0">
+                                <Image
+                                    src={service.image}
+                                    alt={service.title}
+                                    fill
+                                    className="object-cover transition-transform duration-700 group-hover:scale-105"
+                                />
+                            </div>
                         </div>
                     </div>
                 ))}

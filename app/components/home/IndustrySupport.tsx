@@ -3,6 +3,7 @@
 import React, { useRef, useEffect } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
+import AnimatedPillButton from '../AnimatedPillButton';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
@@ -49,6 +50,25 @@ const IndustrySupport = () => {
                 stagger: 0.2,
                 ease: "power3.out"
             });
+
+            gsap.utils.toArray<HTMLElement>(".project-item").forEach((item) => {
+                const imgWrapper = item.querySelector(".parallax-inner");
+                if (imgWrapper) {
+                    gsap.fromTo(imgWrapper,
+                        { yPercent: -15 },
+                        {
+                            yPercent: 15,
+                            ease: "none",
+                            scrollTrigger: {
+                                trigger: item,
+                                start: "top bottom",
+                                end: "bottom top",
+                                scrub: true
+                            }
+                        }
+                    );
+                }
+            });
         }, containerRef);
         return () => ctx.revert();
     }, []);
@@ -66,12 +86,11 @@ const IndustrySupport = () => {
                         Explore a selection of projects blending creativity with practical design
                     </p>
                     <div className="pt-2 md:pt-4">
-                        <Link
+                        <AnimatedPillButton
                             href="/service"
-                            className="inline-flex items-center justify-center px-7 py-3 md:px-10 md:py-4 border border-gray-300 rounded-full text-gray-900 font-bold text-sm sm:text-base hover:bg-gray-900 hover:text-white hover:border-gray-900 transition-all duration-300 shadow-sm"
-                        >
-                            All Works
-                        </Link>
+                            label="All Works"
+                            className="px-7 py-3 md:px-10 md:py-4 border border-[#e5e5e5] text-gray-900 font-bold text-sm sm:text-base shadow-sm"
+                        />
                     </div>
                 </div>
 
@@ -80,12 +99,14 @@ const IndustrySupport = () => {
                     {projects.map((project, index) => (
                         <div key={index} className="project-item group cursor-pointer w-full">
                             <div className="relative aspect-video sm:aspect-16/10 rounded-[30px] sm:rounded-[40px] md:rounded-[50px] overflow-hidden mb-6 md:mb-8 shadow-md">
-                                <Image
-                                    src={project.image}
-                                    alt={project.title}
-                                    fill
-                                    className="object-cover transition-transform duration-700 group-hover:scale-105"
-                                />
+                                <div className="parallax-inner absolute w-full h-[120%] -top-[10%] left-0">
+                                    <Image
+                                        src={project.image}
+                                        alt={project.title}
+                                        fill
+                                        className="object-cover transition-transform duration-700 group-hover:scale-105"
+                                    />
+                                </div>
                                 {/* Tags on image */}
                                 <div className="absolute bottom-4 left-4 sm:bottom-6 sm:left-6 md:bottom-10 md:left-10 flex flex-wrap gap-2 md:gap-3">
                                     {project.tags.map((tag, tIdx) => (

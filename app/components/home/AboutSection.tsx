@@ -38,6 +38,23 @@ const AboutSection = () => {
                         }
                     }
                 );
+
+                const parallaxInner = imageRef.current.querySelector(".about-parallax-inner");
+                if (parallaxInner) {
+                    gsap.fromTo(parallaxInner,
+                        { yPercent: -15 },
+                        {
+                            yPercent: 15,
+                            ease: "none",
+                            scrollTrigger: {
+                                trigger: imageRef.current,
+                                start: "top bottom",
+                                end: "bottom top",
+                                scrub: true
+                            }
+                        }
+                    );
+                }
             }
 
             // Content stagger animation
@@ -94,16 +111,16 @@ const AboutSection = () => {
 
             {/* Sparkle/Star decorations - Hidden on small mobile */}
             <div className="absolute top-10 md:top-20 left-5 md:left-10 w-3 md:w-4 h-3 md:h-4 opacity-40">
-                <Image src="/about-section/purple-star.png" alt="" fill className="object-contain" />
+                <Image src="/services/purple-star.png" alt="" fill className="object-contain" />
             </div>
             <div className="absolute top-30 md:top-40 right-10 md:right-20 w-2 md:w-3 h-2 md:h-3 opacity-30">
-                <Image src="/about-section/black-star.png" alt="" fill className="object-contain" />
+                <Image src="/services/purple-star.png" alt="" fill className="object-contain grayscale" />
             </div>
             <div className="absolute bottom-20 md:bottom-40 left-10 md:left-20 w-2 md:w-3 h-2 md:h-3 opacity-30">
-                <Image src="/about-section/black-star.png" alt="" fill className="object-contain" />
+                <Image src="/services/purple-star.png" alt="" fill className="object-contain grayscale" />
             </div>
             <div className="absolute bottom-10 md:bottom-20 right-20 md:right-40 w-3 md:w-4 h-3 md:h-4 opacity-40">
-                <Image src="/about-section/purple-star.png" alt="" fill className="object-contain" />
+                <Image src="/services/purple-star.png" alt="" fill className="object-contain" />
             </div>
 
             <div className="max-w-7xl w-full grid grid-cols-1 lg:grid-cols-2 gap-10 md:gap-16 lg:gap-20 items-center">
@@ -114,12 +131,14 @@ const AboutSection = () => {
                         <div className="absolute inset-0 bg-linear-to-br from-[#4a5568] via-[#2d3748] to-[#1a202c] rounded-[24px] md:rounded-[32px] shadow-2xl transform perspective-1000 -rotate-y-2 md:-rotate-y-5 scale-95 sm:scale-100">
                             {/* Inner glow */}
                             <div className="absolute inset-2 md:inset-4 bg-white rounded-[18px] md:rounded-[24px] overflow-hidden">
-                                <Image
-                                    src="/about-section/meeting-room.jpg"
-                                    alt="Dilshaj Infotech Team Meeting"
-                                    fill
-                                    className="object-cover"
-                                />
+                                <div className="about-parallax-inner relative w-full h-[120%] -top-[10%] left-0">
+                                    <Image
+                                        src="/about/team/meeting-room.png"
+                                        alt="Dilshaj Infotech Team Meeting"
+                                        fill
+                                        className="object-cover"
+                                    />
+                                </div>
                             </div>
                             {/* Top reflection */}
                             <div className="absolute top-0 left-1/2 -translate-x-1/2 w-20 md:w-32 h-1 md:h-2 bg-white/30 blur-sm rounded-full"></div>
@@ -130,14 +149,14 @@ const AboutSection = () => {
                 {/* Right: Content */}
                 <div ref={contentRef} className="relative space-y-5 md:space-y-6 text-center lg:text-left order-2 lg:order-0 px-2 sm:px-0">
                     {/* Floating 3D Object - Adjusted for mobile visibility */}
-                    <div className="absolute -right-4 lg:-right-10 bottom-0 lg:bottom-10 w-20 h-20 md:w-28 md:h-28 lg:w-32 lg:h-32 opacity-60 lg:opacity-100 animate-float">
+                    {/* <div className="absolute -right-4 lg:-right-6 bottom-0 lg:bottom-10 w-20 h-20 md:w-28 md:h-28 lg:w-32 lg:h-32 opacity-100 animate-float z-200">
                         <Image
-                            src="/about-section/3d-object.png"
+                            src="/services/small-cube.png"
                             alt="3D Decoration"
                             fill
                             className="object-contain"
                         />
-                    </div>
+                    </div> */}
 
                     {/* Heading */}
                     <div className="flex flex-col sm:flex-row items-center lg:items-start lg:justify-start justify-center gap-2 md:gap-3">

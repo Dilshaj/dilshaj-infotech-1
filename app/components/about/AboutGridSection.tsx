@@ -61,6 +61,23 @@ const AboutGridSection = ({ isHomePage = false }: AboutGridSectionProps) => {
                 ease: "power3.out",
                 stagger: 0.2
             });
+
+            // Parallax Animation for Images
+            gsap.utils.toArray<HTMLElement>(".about-parallax-inner").forEach((inner) => {
+                gsap.fromTo(inner,
+                    { yPercent: -15 },
+                    {
+                        yPercent: 15,
+                        ease: "none",
+                        scrollTrigger: {
+                            trigger: inner.parentElement,
+                            start: "top bottom",
+                            end: "bottom top",
+                            scrub: true
+                        }
+                    }
+                );
+            });
         }, containerRef);
         return () => ctx.revert();
     }, [isHomePage]);
@@ -136,22 +153,26 @@ const AboutGridSection = ({ isHomePage = false }: AboutGridSectionProps) => {
                     <div className="relative w-full max-w-6xl mx-auto mb-32">
                         {/* Main Large Image (Team Meeting) */}
                         <div className="relative w-full md:w-[65%] h-[300px] md:h-[450px] rounded-3xl overflow-hidden shadow-xl z-0">
-                            <Image
-                                src="/about/team/meeting-room.png"
-                                alt="Team Meeting Office"
-                                fill
-                                className="object-cover"
-                            />
+                            <div className="about-parallax-inner relative w-full h-[120%] -top-[10%] left-0">
+                                <Image
+                                    src="/about/team/meeting-room.png"
+                                    alt="Team Meeting Office"
+                                    fill
+                                    className="object-cover"
+                                />
+                            </div>
                         </div>
 
                         {/* Overlapping Smaller Image (Hands Writing) */}
                         <div className="hidden md:block absolute right-0 bottom-[-40px] md:top-[80px] w-[50%] h-[250px] md:h-[350px] rounded-3xl overflow-hidden shadow-2xl border-[6px] border-white z-10">
-                            <Image
-                                src="/about/team/hands-writing.png"
-                                alt="Hands Writing Planning"
-                                fill
-                                className="object-cover"
-                            />
+                            <div className="about-parallax-inner relative w-full h-[120%] -top-[10%] left-0">
+                                <Image
+                                    src="/about/team/hands-writing.png"
+                                    alt="Hands Writing Planning"
+                                    fill
+                                    className="object-cover"
+                                />
+                            </div>
 
                             {/* Play Button Overlay */}
                             <div className="absolute inset-0 flex items-center justify-center bg-black/10 transition-colors hover:bg-black/20 cursor-pointer group">
