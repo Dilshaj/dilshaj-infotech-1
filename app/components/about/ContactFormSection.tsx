@@ -18,6 +18,57 @@ const ContactFormSection = ({
 }: ContactFormSectionProps) => {
     const [selectedSubject, setSelectedSubject] = useState('General Inquiry');
     const containerRef = useRef<HTMLDivElement>(null);
+    const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
+    const [formData, setFormData] = useState({
+        firstName: '',
+        lastName: '',
+        email: '',
+        phone: '',
+        message: ''
+    });
+
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+        const { name, value } = e.target;
+        setFormData(prev => ({
+            ...prev,
+            [name]: value
+        }));
+    };
+
+    const handleSubmit = async (e: React.FormEvent) => {
+        e.preventDefault();
+        setStatus('loading');
+
+        try {
+            const response = await fetch('/api/contact', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    ...formData,
+                    subject: selectedSubject,
+                }),
+            });
+
+            if (response.ok) {
+                setStatus('success');
+                setFormData({
+                    firstName: '',
+                    lastName: '',
+                    email: '',
+                    phone: '',
+                    message: ''
+                });
+                setTimeout(() => setStatus('idle'), 5000);
+            } else {
+                setStatus('error');
+            }
+        } catch (error) {
+            console.error('Error submitting form:', error);
+            setStatus('error');
+        }
+    };
 
     useEffect(() => {
         gsap.registerPlugin(ScrollTrigger);
@@ -93,14 +144,18 @@ const ContactFormSection = ({
 
                 {/* Right Side - Form */}
                 <div className="p-10 md:p-12 md:w-7/12 bg-white">
-                    <form className="space-y-10">
+                    <form className="space-y-10" onSubmit={handleSubmit}>
                         {/* Name Row */}
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
                             <div className="relative">
                                 <label className="text-xs font-semibold text-gray-500 mb-1 block">First Name</label>
                                 <input
                                     type="text"
+                                    name="firstName"
+                                    value={formData.firstName}
+                                    onChange={handleChange}
                                     placeholder="Doe"
+                                    required
                                     suppressHydrationWarning
                                     className="w-full border-b border-gray-300 pb-2 text-gray-900 focus:outline-none focus:border-gray-900 placeholder:text-gray-300 transition-colors"
                                 />
@@ -109,6 +164,9 @@ const ContactFormSection = ({
                                 <label className="text-xs font-semibold text-gray-500 mb-1 block">Last Name</label>
                                 <input
                                     type="text"
+                                    name="lastName"
+                                    value={formData.lastName}
+                                    onChange={handleChange}
                                     placeholder="Doe"
                                     suppressHydrationWarning
                                     className="w-full border-b border-gray-300 pb-2 text-gray-900 focus:outline-none focus:border-gray-900 placeholder:text-gray-300 transition-colors"
@@ -122,7 +180,11 @@ const ContactFormSection = ({
                                 <label className="text-xs font-semibold text-gray-500 mb-1 block">Email</label>
                                 <input
                                     type="email"
-                                    // defaultValue="demo@gmail.com"
+                                    name="email"
+                                    value={formData.email}
+                                    onChange={handleChange}
+                                    placeholder="demo@gmail.com"
+                                    required
                                     suppressHydrationWarning
                                     className="w-full border-b border-gray-300 pb-2 text-gray-900 focus:outline-none focus:border-gray-900 placeholder:text-gray-300 transition-colors"
                                 />
@@ -131,6 +193,9 @@ const ContactFormSection = ({
                                 <label className="text-xs font-semibold text-gray-500 mb-1 block">Phone Number</label>
                                 <input
                                     type="tel"
+                                    name="phone"
+                                    value={formData.phone}
+                                    onChange={handleChange}
                                     placeholder="+1 012 3456 789"
                                     suppressHydrationWarning
                                     className="w-full border-b border-gray-300 pb-2 text-gray-900 focus:outline-none focus:border-gray-900 placeholder:text-gray-300 transition-colors"
@@ -165,18 +230,30 @@ const ContactFormSection = ({
                         <div>
                             <label className="text-xs font-semibold text-gray-500 mb-1 block">Message</label>
                             <textarea
+                                name="message"
+                                value={formData.message}
+                                onChange={handleChange}
                                 placeholder="Write your message.."
                                 rows={1}
+                                required
                                 suppressHydrationWarning
                                 className="w-full border-b border-gray-300 pb-2 text-gray-900 focus:outline-none focus:border-gray-900 placeholder:text-gray-300 transition-colors resize-none"
                             />
                         </div>
 
                         {/* Submit Button */}
-                        <div className="flex justify-end">
-                            <button suppressHydrationWarning type="button" className="bg-[#011C2B] text-white px-10 py-3 rounded-md text-sm font-medium hover:bg-gray-800 transition-colors shadow-lg shadow-gray-200">
-                                Send Message
+                        <div className="flex flex-col items-end gap-2">
+                            <button
+                                suppressHydrationWarning
+                                type="submit"
+                                disabled={status === 'loading'}
+                                className="bg-[#011C2B] text-white px-10 py-3 rounded-md text-sm font-medium hover:bg-gray-800 transition-colors shadow-lg shadow-gray-200 disabled:opacity-70 disabled:cursor-not-allowed flex items-center gap-2"
+                            >
+                                {status === 'loading' ? 'Sending...' : 'Send Message'}
+                                {status !== 'loading' && <Send size={16} />}
                             </button>
+                            {status === 'success' && <p className="text-green-600 text-sm">Message sent successfully!</p>}
+                            {status === 'error' && <p className="text-red-600 text-sm">Failed to send message. Please try again.</p>}
                         </div>
 
                     </form>

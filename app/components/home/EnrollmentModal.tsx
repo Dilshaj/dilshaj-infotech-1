@@ -13,6 +13,64 @@ interface EnrollmentModalProps {
 const EnrollmentModal = ({ isOpen, onClose, courseType }: EnrollmentModalProps) => {
 
     // Stop body scroll when modal is open
+    const [status, setStatus] = React.useState<'idle' | 'loading' | 'success' | 'error'>('idle');
+    const [formData, setFormData] = React.useState({
+        fullName: '',
+        phone: '',
+        email: '',
+        specialization: 'Full Stack Web Development'
+    });
+
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+        const { name, value } = e.target;
+        setFormData(prev => ({
+            ...prev,
+            [name]: value
+        }));
+    };
+
+    const handleSubmit = async (e: React.FormEvent) => {
+        e.preventDefault();
+        setStatus('loading');
+
+        try {
+            const titleText = courseType === 'internship' ? 'Hands-on Internship' : 'Value Courses';
+            const response = await fetch('/api/contact', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    firstName: formData.fullName, // Using fullName as firstName
+                    lastName: '', // Leaving lastName empty as we only collected one name field
+                    email: formData.email,
+                    phone: formData.phone,
+                    subject: `New Enrollment: ${titleText}`,
+                    message: `Specialization: ${formData.specialization}`
+                }),
+            });
+
+            if (response.ok) {
+                setStatus('success');
+                setFormData({
+                    fullName: '',
+                    phone: '',
+                    email: '',
+                    specialization: 'Full Stack Web Development'
+                });
+                setTimeout(() => {
+                    setStatus('idle');
+                    onClose();
+                }, 3000);
+            } else {
+                setStatus('error');
+            }
+        } catch (error) {
+            console.error('Error submitting application:', error);
+            setStatus('error');
+        }
+    };
+
     useEffect(() => {
         if (isOpen) {
             document.body.style.overflow = 'hidden';
@@ -69,7 +127,7 @@ const EnrollmentModal = ({ isOpen, onClose, courseType }: EnrollmentModalProps) 
                 </p>
 
                 {/* Form */}
-                <form className="space-y-4">
+                <form className="space-y-4" onSubmit={handleSubmit}>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <div className="space-y-1.5">
                             <label className="text-xs font-bold text-gray-700 ml-1">Full Name</label>
@@ -79,6 +137,10 @@ const EnrollmentModal = ({ isOpen, onClose, courseType }: EnrollmentModalProps) 
                                 </span>
                                 <input
                                     type="text"
+                                    name="fullName"
+                                    value={formData.fullName}
+                                    onChange={handleChange}
+                                    required
                                     placeholder="John Doe"
                                     className="w-full bg-gray-50 border border-transparent focus:bg-white focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10 rounded-xl px-4 py-3 pl-10 text-sm outline-none transition-all placeholder:text-gray-400 text-gray-900 font-medium"
                                 />
@@ -93,6 +155,10 @@ const EnrollmentModal = ({ isOpen, onClose, courseType }: EnrollmentModalProps) 
                                 </span>
                                 <input
                                     type="tel"
+                                    name="phone"
+                                    value={formData.phone}
+                                    onChange={handleChange}
+                                    required
                                     placeholder="+91 00000 00000"
                                     className="w-full bg-gray-50 border border-transparent focus:bg-white focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10 rounded-xl px-4 py-3 pl-10 text-sm outline-none transition-all placeholder:text-gray-400 text-gray-900 font-medium"
                                 />
@@ -108,6 +174,10 @@ const EnrollmentModal = ({ isOpen, onClose, courseType }: EnrollmentModalProps) 
                             </span>
                             <input
                                 type="email"
+                                name="email"
+                                value={formData.email}
+                                onChange={handleChange}
+                                required
                                 placeholder="john@example.com"
                                 className="w-full bg-gray-50 border border-transparent focus:bg-white focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10 rounded-xl px-4 py-3 pl-10 text-sm outline-none transition-all placeholder:text-gray-400 text-gray-900 font-medium"
                             />
@@ -118,12 +188,15 @@ const EnrollmentModal = ({ isOpen, onClose, courseType }: EnrollmentModalProps) 
                         <label className="text-xs font-bold text-gray-700 ml-1">Select Specialization</label>
                         <div className="relative">
                             <select
+                                name="specialization"
+                                value={formData.specialization}
+                                onChange={handleChange}
                                 className="w-full bg-gray-50 border border-transparent focus:bg-white focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10 rounded-xl px-4 py-3 text-sm outline-none transition-all text-gray-900 font-medium appearance-none cursor-pointer"
                             >
-                                <option>Full Stack Web Development</option>
-                                <option>App Development (Flutter/React Native)</option>
-                                <option>UI/UX Design</option>
-                                <option>Data Science & AI</option>
+                                <option value="Full Stack Web Development">Full Stack Web Development</option>
+                                <option value="App Development">App Development (Flutter/React Native)</option>
+                                <option value="UI/UX Design">UI/UX Design</option>
+                                <option value="Data Science & AI">Data Science & AI</option>
                             </select>
                             <span className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none">
                                 <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="m6 9 6 6 6-6"></path></svg>
@@ -132,14 +205,16 @@ const EnrollmentModal = ({ isOpen, onClose, courseType }: EnrollmentModalProps) 
                     </div>
 
                     <button
-                        className="w-full bg-[#2563EB] hover:bg-blue-700 text-white font-bold py-3.5 rounded-xl shadow-lg shadow-blue-500/30 transition-all hover:scale-[1.02] active:scale-[0.98] flex items-center justify-center gap-2 mt-2"
-                        type="button" // Change to submit if actually submitting
+                        className="w-full bg-[#2563EB] hover:bg-blue-700 text-white font-bold py-3.5 rounded-xl shadow-lg shadow-blue-500/30 transition-all hover:scale-[1.02] active:scale-[0.98] flex items-center justify-center gap-2 mt-2 disabled:opacity-70 disabled:cursor-not-allowed"
+                        type="submit"
+                        disabled={status === 'loading'}
                     >
-                        Confirm Application
+                        {status === 'loading' ? 'Submitting...' : 'Confirm Application'}
                         <Send size={16} />
                     </button>
+                    {status === 'success' && <p className="text-green-600 text-sm text-center">Application submitted successfully!</p>}
+                    {status === 'error' && <p className="text-red-500 text-sm text-center">Failed to submit application. Please try again.</p>}
                 </form>
-
             </div>
         </div>
     );

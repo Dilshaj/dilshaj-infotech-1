@@ -14,6 +14,39 @@ import {
 } from "lucide-react";
 
 const Footer = () => {
+    const [email, setEmail] = React.useState('');
+    const [status, setStatus] = React.useState<'idle' | 'loading' | 'success' | 'error'>('idle');
+
+    const handleSubscribe = async (e: React.FormEvent) => {
+        e.preventDefault();
+        setStatus('loading');
+
+        try {
+            const response = await fetch('/api/contact', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    email,
+                    type: 'newsletter',
+                    subject: 'Newsletter Subscription'
+                }),
+            });
+
+            if (response.ok) {
+                setStatus('success');
+                setEmail('');
+                setTimeout(() => setStatus('idle'), 3000);
+            } else {
+                setStatus('error');
+            }
+        } catch (error) {
+            console.error('Error subscribing:', error);
+            setStatus('error');
+        }
+    };
+
     return (
         <footer className="w-full text-white pt-10 bg-[#FDFBF7]">
             <div className="w-full bg-[#0a0a0a] rounded-t-[40px] px-6 md:px-12 pt-12 md:pt-16 pb-8 border-t border-white/5 relative overflow-hidden">
@@ -88,16 +121,25 @@ const Footer = () => {
                         {/* Newsletter */}
                         <div className="lg:col-span-3">
                             <h3 className="text-lg font-medium text-[#bca5ff] mb-6">Get the latest information</h3>
-                            <form className="relative mb-8 max-w-xs md:mx-0">
+                            <form className="relative mb-8 max-w-xs md:mx-0" onSubmit={handleSubscribe}>
                                 <input
                                     type="email"
+                                    value={email}
+                                    onChange={(e) => setEmail(e.target.value)}
                                     placeholder="Email Address"
-                                    className="w-full bg-white text-black py-3 pl-4 pr-12 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#9d8bf4] placeholder:text-gray-500 font-medium"
+                                    required
+                                    className="w-full bg-white text-black py-3 pl-4 pr-12 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#9d8bf4] placeholder:text-gray-500 font-medium disabled:opacity-75"
+                                    disabled={status === 'loading'}
                                 />
-                                <button className="absolute right-1 top-1 bottom-1 bg-[#9d8bf4] p-2 rounded-md text-white hover:bg-[#8875e5] transition-colors flex items-center justify-center w-10">
-                                    <Send className="w-4 h-4" />
+                                <button
+                                    type="submit"
+                                    disabled={status === 'loading'}
+                                    className="absolute right-1 top-1 bottom-1 bg-[#9d8bf4] p-2 rounded-md text-white hover:bg-[#8875e5] transition-colors flex items-center justify-center w-10 disabled:opacity-70">
+                                    {status === 'loading' ? <div className="w-3 h-3 border-2 border-white border-t-transparent rounded-full animate-spin"></div> : <Send className="w-4 h-4" />}
                                 </button>
                             </form>
+                            {status === 'success' && <p className="text-green-400 text-sm mb-4">Subscribed successfully!</p>}
+                            {status === 'error' && <p className="text-red-400 text-sm mb-4">Subscription failed. Try again.</p>}
                             <div className="flex gap-4 justify-start">
                                 <a href="#" className="text-white hover:text-gray-300 transition-colors">
                                     <Facebook className="w-5 h-5 fill-white" />
