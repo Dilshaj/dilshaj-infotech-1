@@ -220,7 +220,7 @@ const Header = () => {
                     openMenuButtonColor="#000"
                     changeMenuColorOnOpen={true}
                     colors={['#B19EEF', '#5227FF']}
-                    logoUrl="/logo.png"
+                    logoUrl="/mainLogo.png"
                     accentColor="#B19EEF"
                     isFixed={true}
                 />
