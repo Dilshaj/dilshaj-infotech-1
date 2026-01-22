@@ -181,7 +181,7 @@ const Header = () => {
                 <div className="flex justify-start">
                     <Link href="/" className="relative w-32 h-full flex items-center justify-center overflow-hidden p-1 border border-[#9e9e9e46] rounded-full transition-transform duration-300 bg-white/20 backdrop-blur-md">
                         <Image
-                            src="/mainLogo.png"
+                            src="/logo.png"
                             alt="Dilshaj Infotech Logo"
                             width={64}
                             height={65}
@@ -220,7 +220,7 @@ const Header = () => {
                     openMenuButtonColor="#000"
                     changeMenuColorOnOpen={true}
                     colors={['#B19EEF', '#5227FF']}
-                    logoUrl="/mainLogo.png"
+                    logoUrl="/logo.png"
                     accentColor="#B19EEF"
                     isFixed={true}
                 />
