@@ -72,7 +72,7 @@ const Footer = () => {
                                 {/* Ensure logo is visible on dark background */}
                                 <div className="flex items-center gap-2">
                                     <Image
-                                        src="/mainlogo.png"
+                                        src="/dilshaj-logo.png"
                                         alt="Dilshaj Infotech"
                                         width={180}
                                         height={60}
