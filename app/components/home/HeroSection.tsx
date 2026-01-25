@@ -7,15 +7,33 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger'
 
 gsap.registerPlugin(ScrollTrigger);
 
+const IndianFlag = () => (
+    <svg viewBox="0 0 30 20" className="w-8 h-5 mx-3 shadow-sm inline-block rounded-[2px]" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect width="30" height="20" fill="white" />
+        <rect width="30" height="6.66" fill="#FF9933" />
+        <rect y="13.33" width="30" height="6.66" fill="#138808" />
+        <circle cx="15" cy="10" r="3.3" stroke="#000080" strokeWidth="0.5" fill="none" />
+        <circle cx="15" cy="10" r="0.5" fill="#000080" />
+        <g stroke="#000080" strokeWidth="0.2">
+            <line x1="15" y1="6.7" x2="15" y2="13.3" />
+            <line x1="11.7" y1="10" x2="18.3" y2="10" />
+            <line x1="12.6" y1="7.6" x2="17.4" y2="12.4" />
+            <line x1="17.4" y1="7.6" x2="12.6" y2="12.4" />
+        </g>
+    </svg>
+);
+
 const HeroSection = () => {
     const heartRef = useRef<HTMLDivElement>(null);
     const helmetRef = useRef<HTMLDivElement>(null);
     const sphereRef = useRef<HTMLDivElement>(null);
     const containerRef = useRef<HTMLDivElement>(null);
     const marqueeRef = useRef<HTMLDivElement>(null);
+    const marqueeRepublicRef = useRef<HTMLDivElement>(null);
     const videoRef = useRef<HTMLVideoElement>(null);
     const topTextRef = useRef<HTMLDivElement>(null);
     const bottomTextRef = useRef<HTMLDivElement>(null);
+    const chakraRef = useRef<HTMLDivElement>(null);
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [isPlaying, setIsPlaying] = useState(false);
 
@@ -64,15 +82,42 @@ const HeroSection = () => {
                     });
                 }
 
-                // Initial reveal animation
+                // Republic Day & Initial Reveal Sequence
+                const tl = gsap.timeline();
+
+                // 1. Tricolor Background Reveal
+                tl.fromTo(".rd-gradient",
+                    { opacity: 0, scale: 0.8 },
+                    { opacity: 1, scale: 1, duration: 1.5, stagger: 0.2, ease: "power2.out" }
+                );
+
+                // 2. Ashoka Chakra Entrance
+                if (chakraRef.current) {
+                    tl.fromTo(chakraRef.current,
+                        { scale: 0.5, opacity: 0, rotation: -90 },
+                        { scale: 1, opacity: 1, rotation: 0, duration: 1.8, ease: "back.out(1.2)" },
+                        "<"
+                    );
+
+                    // Continuous slow rotation for Chakra
+                    gsap.to(chakraRef.current, {
+                        rotation: 360,
+                        transformOrigin: "center center",
+                        duration: 60,
+                        repeat: -1,
+                        ease: "linear"
+                    });
+                }
+
+                // 3. Main Hero Content Reveal (Sequenced with the above)
                 if (containerRef.current) {
-                    gsap.from(containerRef.current.children, {
+                    tl.from(containerRef.current.children, {
                         y: 60,
                         opacity: 0,
                         duration: 1.2,
                         stagger: 0.15,
                         ease: "power4.out"
-                    });
+                    }, "-=1.0"); // Overlap with background finish
                 }
 
                 // Marquee animation
@@ -83,6 +128,14 @@ const HeroSection = () => {
                         ease: "none",
                         repeat: -1
                     });
+                }
+
+                // Republic Day Marquee Animation
+                if (marqueeRepublicRef.current) {
+                    gsap.fromTo(marqueeRepublicRef.current,
+                        { xPercent: -50 },
+                        { xPercent: 0, duration: 25, ease: "linear", repeat: -1 }
+                    );
                 }
 
                 // Smooth rotation for the scroll text
@@ -130,6 +183,7 @@ const HeroSection = () => {
                                 start: "top center",
                                 end: "bottom top",
                                 scrub: 1,
+                                invalidateOnRefresh: true,
                             },
                             y: -50,
                             ease: "none"
@@ -162,7 +216,36 @@ const HeroSection = () => {
     }, []);
 
     return (
-    <section className="relative min-h-screen flex flex-col items-center justify-center overflow-hidden bg-[#FDFBF7] font-sans pt-32 pb-24 md:pt-45 md:px-10 md:pb-32">
+        <section className="relative min-h-screen flex flex-col items-center justify-center overflow-hidden bg-[#FDFBF7] font-sans pt-32 pb-24 md:pt-45 md:px-10 md:pb-32">
+            {/* Republic Day Theme Background */}
+            <div className="absolute inset-0 pointer-events-none overflow-hidden z-[1]">
+                {/* Saffron Glow */}
+                <div className="rd-gradient absolute -top-[10%] -left-[10%] w-[70%] h-[70%] md:w-[60%] md:h-[60%] bg-[#FF9933]/70 blur-[60px] md:blur-[100px] rounded-full mix-blend-multiply" />
+                {/* White/Bright Glow */}
+                <div className="rd-gradient absolute top-[30%] left-[20%] w-[60%] h-[60%] md:w-[50%] md:h-[50%] bg-white/60 blur-[50px] md:blur-[80px] rounded-full mix-blend-overlay" />
+                {/* Green Glow */}
+                <div className="rd-gradient absolute -bottom-[10%] -right-[10%] w-[70%] h-[70%] md:w-[60%] md:h-[60%] bg-[#138808]/70 blur-[60px] md:blur-[100px] rounded-full mix-blend-multiply" />
+
+                {/* Ashoka Chakra - Rotating Watermark */}
+                <div
+                    ref={chakraRef}
+                    className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[300px] h-[300px] sm:w-[500px] sm:h-[500px] md:w-[800px] md:h-[800px] opacity-100 z-0"
+                >
+                    <svg viewBox="0 0 24 24" fill="none" className="w-full h-full text-[#8A9BB6]">
+                        <circle cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="0.5" />
+                        <circle cx="12" cy="12" r="1.5" fill="currentColor" />
+                        {[...Array(24)].map((_, i) => (
+                            <line
+                                key={i}
+                                x1="12" y1="12" x2="12" y2="2"
+                                stroke="currentColor" strokeWidth="0.25"
+                                transform={`rotate(${i * 15} 12 12)`}
+                            />
+                        ))}
+                    </svg>
+                </div>
+            </div>
+
             <div ref={containerRef} className="relative z-20 flex flex-col items-center w-full">
 
                 {/* First Line: Design, [shaj in] */}
@@ -370,6 +453,21 @@ const HeroSection = () => {
                     </div>
                 </div>
             )}
+            {/* Republic Day Marquee - Placed at the very bottom of Hero */}
+            <div className="absolute bottom-0 left-0 w-full border-t border-zinc-200 bg-[#FDFBF7]/80 backdrop-blur-sm py-3 overflow-hidden z-[5]">
+                <div ref={marqueeRepublicRef} className="flex whitespace-nowrap w-fit">
+                    {/* Multiple duplicates for seamless loop */}
+                    {[...Array(12)].map((_, i) => (
+                        <div key={i} className="flex items-center mx-4 md:mx-6 opacity-90 transition-opacity">
+                            <IndianFlag />
+                            <span className="text-zinc-900 text-xs sm:text-sm md:text-base font-medium uppercase tracking-[0.2em]">
+                                Happy Republic Day
+                            </span>
+                            <IndianFlag />
+                        </div>
+                    ))}
+                </div>
+            </div>
         </section>
     )
 }

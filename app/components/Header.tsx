@@ -179,9 +179,9 @@ const Header = () => {
             <header className="hidden md:grid fixed top-0 left-0 w-full z-50 px-4 md:px-8 lg:px-20 py-4 grid-cols-3 justify-between items-center bg-transparent">
                 {/* Logo on the left */}
                 <div className="flex justify-start">
-                    <Link href="/" className="relative w-32 h-full flex items-center justify-center overflow-hidden p-1 border border-[#9e9e9e46] rounded-full transition-transform duration-300 bg-white/20 backdrop-blur-md">
+                    <Link href="/" className="relative w-32 h-full flex items-center justify-center overflow-hidden p-1 py-2 border border-[#9e9e9e46] rounded-full transition-transform duration-300 bg-white/20 backdrop-blur-md">
                         <Image
-                            src="/logo.png"
+                            src="/dilshaj-logo.png"
                             alt="Dilshaj Infotech Logo"
                             width={64}
                             height={65}

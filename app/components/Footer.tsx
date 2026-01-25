@@ -15,6 +15,7 @@ import {
 
 const Footer = () => {
     const [email, setEmail] = React.useState('');
+
     const [status, setStatus] = React.useState<'idle' | 'loading' | 'success' | 'error'>('idle');
 
     const handleSubscribe = async (e: React.FormEvent) => {
@@ -72,7 +73,7 @@ const Footer = () => {
                                 {/* Ensure logo is visible on dark background */}
                                 <div className="flex items-center gap-2">
                                     <Image
-                                        src="/logo.png"
+                                        src="/dilshaj-logo.png"
                                         alt="Dilshaj Infotech"
                                         width={180}
                                         height={60}
