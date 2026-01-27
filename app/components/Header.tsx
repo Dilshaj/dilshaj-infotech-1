@@ -97,7 +97,7 @@ const LetsTalkButton = () => {
     return (
         <Link
             href="/contact"
-            className="relative overflow-hidden inline-flex items-center justify-center h-[42px] no-underline rounded-full box-border font-semibold text-[12px] lg:text-[14px] leading-0 uppercase tracking-[0.2px] whitespace-nowrap cursor-pointer px-6 bg-white text-black border border-[#9e9e9e46]"
+            className="relative overflow-hidden inline-flex items-center justify-center h-[42px] no-underline rounded-full box-border font-semibold text-[12px] lg:text-[14px] leading-0 uppercase tracking-[0.2px] whitespace-nowrap cursor-pointer px-6 bg-white/20 backdrop-blur-md text-black border border-[#9e9e9e46]"
             onMouseEnter={handleEnter}
             onMouseLeave={handleLeave}
         >
@@ -196,7 +196,7 @@ const Header = () => {
                         items={desktopNavItems}
                         activeHref={pathname}
                         baseColor="rgba(255, 255, 255, 0.2)"
-                        pillColor="#ffffff"
+                        pillColor="rgba(255, 255, 255, 0.1)"
                         hoveredPillTextColor="#000000"
                         pillTextColor="#000000"
                     />
