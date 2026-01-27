@@ -15,6 +15,7 @@ import {
 
 const Footer = () => {
     const [email, setEmail] = React.useState('');
+
     const [status, setStatus] = React.useState<'idle' | 'loading' | 'success' | 'error'>('idle');
 
     const handleSubscribe = async (e: React.FormEvent) => {
