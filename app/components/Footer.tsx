@@ -104,7 +104,10 @@ const Footer = () => {
                                     <span>+91 8977272763</span>
                                 </li>
                                 <li className="flex items-center gap-3 justify-start">
-                                    <a href="mailto:dilshajinfotech.it@gmail.com" className="hover:text-white transition-colors">dilshajinfotech.it@gmail.com</a>
+                                    <a href="mailto:careers@dilshajinfotech.tech" className="hover:text-white transition-colors">careers@dilshajinfotech.tech</a>
+                                </li>
+                                <li className="flex items-center gap-3 justify-start">
+                                    <a href="mailto:info@dilshajinfotech.tech" className="hover:text-white transition-colors">info@dilshajinfotech.tech</a>
                                 </li>
                                 <li className="flex items-center gap-3 justify-start">
                                     <span>Rolugunta, Narsipatnam,<br />Visakhapatnam, Andhra Pradesh</span>
