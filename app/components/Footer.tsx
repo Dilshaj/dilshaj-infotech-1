@@ -3,15 +3,8 @@
 import React from 'react';
 import Link from "next/link";
 import Image from "next/image";
-import {
-    ArrowUpRight,
-    Send,
-    Facebook,
-    Youtube,
-    Instagram,
-    Twitter,
-    MessageCircle,
-} from "lucide-react";
+import { ArrowUpRight, Send } from "lucide-react";
+import { FaFacebookF, FaYoutube, FaWhatsapp, FaInstagram, FaXTwitter } from "react-icons/fa6";
 
 const Footer = () => {
     const [email, setEmail] = React.useState('');
@@ -142,20 +135,20 @@ const Footer = () => {
                             {status === 'success' && <p className="text-green-400 text-sm mb-4">Subscribed successfully!</p>}
                             {status === 'error' && <p className="text-red-400 text-sm mb-4">Subscription failed. Try again.</p>}
                             <div className="flex gap-4 justify-start">
-                                <a href="#" className="text-white hover:text-gray-300 transition-colors">
-                                    <Facebook className="w-5 h-5 fill-white" />
+                                <a href="#" aria-label="Facebook" className="p-2 rounded-full border border-white/10 hover:bg-white/10 hover:scale-110 transition-all duration-300 group">
+                                    <FaFacebookF className="w-5 h-5 text-gray-400 group-hover:text-blue-500 transition-colors" />
                                 </a>
-                                <a href="#" className="text-white hover:text-gray-300 transition-colors">
-                                    <Youtube className="w-5 h-5 fill-white" />
+                                <a href="#" aria-label="YouTube" className="p-2 rounded-full border border-white/10 hover:bg-white/10 hover:scale-110 transition-all duration-300 group">
+                                    <FaYoutube className="w-5 h-5 text-gray-400 group-hover:text-red-500 transition-colors" />
                                 </a>
-                                <a href="#" className="text-white hover:text-gray-300 transition-colors">
-                                    <MessageCircle className="w-5 h-5 fill-white" />
+                                <a href="#" aria-label="WhatsApp" className="p-2 rounded-full border border-white/10 hover:bg-white/10 hover:scale-110 transition-all duration-300 group">
+                                    <FaWhatsapp className="w-5 h-5 text-gray-400 group-hover:text-green-500 transition-colors" />
                                 </a>
-                                <a href="#" className="text-white hover:text-gray-300 transition-colors">
-                                    <Instagram className="w-5 h-5" />
+                                <a href="#" aria-label="Instagram" className="p-2 rounded-full border border-white/10 hover:bg-white/10 hover:scale-110 transition-all duration-300 group">
+                                    <FaInstagram className="w-5 h-5 text-gray-400 group-hover:text-pink-500 transition-colors" />
                                 </a>
-                                <a href="#" className="text-white hover:text-gray-300 transition-colors">
-                                    <Twitter className="w-5 h-5 fill-white" />
+                                <a href="#" aria-label="Twitter X" className="p-2 rounded-full border border-white/10 hover:bg-white/10 hover:scale-110 transition-all duration-300 group">
+                                    <FaXTwitter className="w-5 h-5 text-gray-400 group-hover:text-white transition-colors" />
                                 </a>
                             </div>
                         </div>

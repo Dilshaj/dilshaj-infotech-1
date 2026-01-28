@@ -196,7 +196,7 @@ const Header = () => {
                         items={desktopNavItems}
                         activeHref={pathname}
                         baseColor="rgba(255, 255, 255, 0.2)"
-                        pillColor="rgba(255, 255, 255, 0.1)"
+                        pillColor="transparent"
                         hoveredPillTextColor="#000000"
                         pillTextColor="#000000"
                     />
