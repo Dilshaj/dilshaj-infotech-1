@@ -111,7 +111,11 @@ const ContactFormSection = ({
                             </div>
                             <div className="flex items-center gap-4">
                                 <Mail size={20} className="text-white" />
-                                <span className="text-sm">dilshajinfotech.it@gmail.com</span>
+                                <span className="text-sm">careers@dilshajinfotech.tech</span>
+                            </div>
+                            <div className="flex items-center gap-4">
+                                <Mail size={20} className="text-white" />
+                                <span className="text-sm">info@dilshajinfotech.tech</span>
                             </div>
                             <div className="flex items-start gap-4">
                                 <MapPin size={20} className="text-white shrink-0 mt-1" />
@@ -183,7 +187,7 @@ const ContactFormSection = ({
                                     name="email"
                                     value={formData.email}
                                     onChange={handleChange}
-                                    placeholder="demo@gmail.com"
+                                    placeholder="info@dilshajinfotech.tech"
                                     required
                                     suppressHydrationWarning
                                     className="w-full border-b border-gray-300 pb-2 text-gray-900 focus:outline-none focus:border-gray-900 placeholder:text-gray-300 transition-colors"

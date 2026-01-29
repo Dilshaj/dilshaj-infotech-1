@@ -5,6 +5,8 @@ import { gsap } from 'gsap';
 import ContactFormSection from '../components/about/ContactFormSection';
 import FAQSection from '../components/contact/FAQSection';
 
+// Force refresh
+
 const ContactPage = () => {
     const containerRef = useRef<HTMLDivElement>(null);
 
